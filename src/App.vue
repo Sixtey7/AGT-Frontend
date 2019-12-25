@@ -10,10 +10,19 @@
     </v-app>
 </template>
 <script>
+import CategoryModel from './model/CategoryModel';
+import Vue from 'vue';
+
 export default {
     name: 'app',
     components: {
     },
+    data() {
+        return {
+            logger: Vue.$log,
+            categoryModel: new CategoryModel(Vue.$log)
+        }
+    }
 }
 </script>
 <style>
