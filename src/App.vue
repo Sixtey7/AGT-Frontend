@@ -11,6 +11,7 @@
 </template>
 <script>
 import CategoryModel from './model/CategoryModel';
+import ItemModel from './model/ItemModel';
 import Vue from 'vue';
 
 export default {
@@ -20,6 +21,7 @@ export default {
     data() {
         return {
             logger: Vue.$log,
+            itemModel: new ItemModel(Vue.$log),
             categoryModel: new CategoryModel(Vue.$log)
         }
     }
