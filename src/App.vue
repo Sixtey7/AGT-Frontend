@@ -3,7 +3,11 @@
         <v-card height="100%">
             <v-content>
                 <v-container>
-                    Hello World
+                    <ListView
+                        :categoryModel = "categoryModel"
+                        :categoryArray = "categoryModel.categoryArray"
+                        :logger = "logger">
+                    </ListView>
                 </v-container>
             </v-content>
         </v-card>   
@@ -12,11 +16,13 @@
 <script>
 import CategoryModel from './model/CategoryModel';
 import ItemModel from './model/ItemModel';
+import ListView from './components/list/ListView';
 import Vue from 'vue';
 
 export default {
     name: 'app',
     components: {
+        ListView
     },
     data() {
         return {
