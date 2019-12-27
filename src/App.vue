@@ -6,6 +6,7 @@
                     <ListView
                         :categoryModel = "categoryModel"
                         :categoryArray = "categoryModel.categoryArray"
+                        :itemArray = "itemModel.itemArray"
                         :logger = "logger">
                     </ListView>
                 </v-container>
