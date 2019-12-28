@@ -7,46 +7,23 @@
                 v-for="category in categoryArray"
                 :key = "category.id"
             >
-            <template v-slot:activator>
-                <v-list-item-title>{{category.name}}</v-list-item-title>
-            </template>
+                <template v-slot:activator>
+                    <v-list-item-title>{{category.name}}</v-list-item-title>
+                </template>
 
-            <v-list-item>
-                <v-list-item-action>
-                    <v-checkbox
-                        v-model="checked"
-                        color="primary"
-                        @click="toggle"
-                    ></v-checkbox>
-                </v-list-item-action>
-                <v-list-item-content v-text="item1Title">
-                </v-list-item-content>
-            </v-list-item>
-
-            <v-list-item>
-                <v-list-item-action>
-                    <v-checkbox
-                        v-model="checked"
-                        color="primary"
-                        @click="toggle"
-                    ></v-checkbox>
-                </v-list-item-action>
-                <v-list-item-content v-text="item2Title">
-                </v-list-item-content>
-            </v-list-item>
-
-            <v-list-item>
-                <v-list-item-action>
-                    <v-checkbox
-                        v-model="checked"
-                        color="primary"
-                        @click="toggle"
-                    ></v-checkbox>
-                </v-list-item-action>                
-                <v-list-item-content v-text="item3Title">
-                </v-list-item-content>
-            </v-list-item>
-
+                <v-list-item
+                    v-for="item in itemMap[category.id]"
+                    :key = "item.id">
+                    <v-list-item-action>
+                        <v-checkbox
+                            v-model="item.current_value"
+                            color="primary"
+                            @click="toggle"
+                        ></v-checkbox>
+                    </v-list-item-action>
+                    <v-list-item-content v-text="item.name">
+                    </v-list-item-content>
+                </v-list-item>
             </v-list-group>
         </div>
       </v-card>
