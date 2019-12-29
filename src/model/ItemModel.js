@@ -1,11 +1,13 @@
 import axios from 'axios'
 import ArrayHelper from '../utils/ArrayHelper';
+import ItemHelper from '../utils/ItemHelper';
 
 const CATEGORY_URL = 'http://localhost:5000/items/';
 
 class ItemModel {
     itemArray;
     _arrayHelper;
+    _itemHelper;
     _logger;
 
     constructor(logger) {
@@ -13,13 +15,14 @@ class ItemModel {
         this._logger.debug('Standing up the Item Model!');
         this.itemArray = new Array();
         this._arrayHelper = new ArrayHelper(logger);
+        this._itemHelper = new ItemHelper(logger);
 
         axios
             .get(CATEGORY_URL)
             .then(response => {
                 this._logger.debug('Got the response: ' + JSON.stringify(response.data));
 
-                this.itemArray = response.data;
+                this.itemArray = this._itemHelper.massageItems(response.data);
 
                 this._logger.debug('Item Array is: ' + this.itemArray.length + ' items long!');
             });
