@@ -18,7 +18,7 @@
                         <v-checkbox
                             v-model="item.current_value"
                             color="primary"
-                            @click="toggle"
+                            @change="one_and_done_toggle(item.id)"
                         ></v-checkbox>
                     </v-list-item-action>
                     <v-list-item-content v-text="item.name">
@@ -38,13 +38,8 @@ export default {
     },
     data() {
         return {
-            checked: false,
-            item1Title: 'Item 1',
-            item2Title: 'Item 2',
-            item3Title: 'Item 3',
             itemHelper: new ItemHelper(this.logger),
             itemMap: new Map()
-
         }
     },
     props: {
@@ -54,10 +49,11 @@ export default {
         itemArray: Array
     },
     methods: {
-        toggle() {
-            // eslint-disable-next-line
-            this.logger.debug("Oh, I've been clicked!");
+        one_and_done_toggle: function(itemIdClicked) {
+            this.logger.debug('item is currently: ' + JSON.stringify(this.itemArray.find(item => item.id === itemIdClicked)));
+            // TODO: Need to emit the value here so the parent can handle it and tell the backend
         }
+        
     },
     watch: {
         itemArray: function(val) {
