@@ -10,20 +10,13 @@
                 <template v-slot:activator>
                     <v-list-item-title>{{category.name}}</v-list-item-title>
                 </template>
-
-                <v-list-item
+                <div
                     v-for="item in itemMap[category.id]"
-                    :key = "item.id">
-                    <v-list-item-action>
-                        <v-checkbox
-                            v-model="item.current_value"
-                            color="primary"
-                            @change="one_and_done_toggle(item.id)"
-                        ></v-checkbox>
-                    </v-list-item-action>
-                    <v-list-item-content v-text="item.name">
-                    </v-list-item-content>
-                </v-list-item>
+                    :key="item.id">
+                    <OneAndDone
+                        :item="item" />
+                </div>
+                
             </v-list-group>
         </div>
       </v-card>
@@ -31,10 +24,11 @@
 <script>
 import CategoryModel from '../../model/CategoryModel';
 import ItemHelper from '../../utils/ItemHelper';
-
+import OneAndDone from '../items/OneAndDone';
 export default {
     name: 'ListView',
     components: {
+        OneAndDone
     },
     data() {
         return {
