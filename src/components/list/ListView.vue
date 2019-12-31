@@ -14,7 +14,9 @@
                     v-for="item in itemMap[category.id]"
                     :key="item.id">
                     <OneAndDone
-                        :item="item" />
+                        :item="item" 
+                        :logger="logger"
+                        @changed="one_and_done_toggle"/>
                 </div>
                 
             </v-list-group>
@@ -43,9 +45,9 @@ export default {
         itemArray: Array
     },
     methods: {
-        one_and_done_toggle: function(itemIdClicked) {
-            this.logger.debug('item is currently: ' + JSON.stringify(this.itemArray.find(item => item.id === itemIdClicked)));
-            // TODO: Need to emit the value here so the parent can handle it and tell the backend
+        one_and_done_toggle: function(updatedItem) {
+            this.logger.debug('got a one and done change event: ' + JSON.stringify(updatedItem));
+            this.$emit('updatedItem', updatedItem);
         }
         
     },

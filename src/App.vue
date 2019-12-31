@@ -7,7 +7,8 @@
                         :categoryModel = "categoryModel"
                         :categoryArray = "categoryModel.categoryArray"
                         :itemArray = "itemModel.itemArray"
-                        :logger = "logger">
+                        :logger = "logger"
+                        @updatedItem = "itemUpdated">
                     </ListView>
                 </v-container>
             </v-content>
@@ -30,6 +31,12 @@ export default {
             logger: Vue.$log,
             itemModel: new ItemModel(Vue.$log),
             categoryModel: new CategoryModel(Vue.$log)
+        }
+    },
+    methods: {
+        itemUpdated(updatedItem) {
+            this.logger.debug('top level got an updated item: ' + JSON.stringify(updatedItem));
+            this.itemModel.saveItem(updatedItem);
         }
     }
 }

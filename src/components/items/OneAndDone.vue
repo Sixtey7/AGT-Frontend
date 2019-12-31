@@ -4,7 +4,7 @@
             <v-checkbox
                 v-model="item.current_value"
                 color="primary"
-                @change="one_and_done_toggle(item.id)"
+                @change="one_and_done_toggle()"
             ></v-checkbox>
         </v-list-item-action>
         <v-list-item-content v-text="item.name">
@@ -15,12 +15,13 @@
 export default {
     name: "OneAndDone",
     props: {
-        item: Object
+        item: Object,
+        logger: Object
     },
     methods: {
-        one_and_done_toggle: function(itemIdClicked) {
-            this.logger.debug('item is currently: ' + JSON.stringify(this.itemArray.find(item => item.id === itemIdClicked)));
-            // TODO: Need to emit the value here so the parent can handle it and tell the backend
+        one_and_done_toggle: function() {
+            this.logger.debug('item is currently: ' + JSON.stringify(this.item));
+            this.$emit('changed', this.item);
         }
     }
 }

@@ -28,7 +28,15 @@ class ItemModel {
             });
     }
 
-    async saveItem(itemToSave) {
+    async saveItem(itemToSaveInput) {
+        //deep copy the item before manipulating it
+        let itemToSave = JSON.parse(JSON.stringify(itemToSaveInput));
+
+        // massage the item to prep it for sending to the backend
+        this._logger.debug('Item before passing to massage: ' + JSON.stringify(itemToSave));
+        this._itemHelper.massageItemForBackend(itemToSave);
+        this._logger.debug('Item after passing to massage: ' + JSON.stringify(itemToSave));
+        
         //determine if this is an existing item or a new one
         if (itemToSave.id) {
             this._logger.debug('saving an edited item: ' + JSON.stringify(itemToSave));
@@ -36,7 +44,9 @@ class ItemModel {
             let returnValue = await this._putItem(itemToSave);
 
             if (returnValue) {
-                this.itemArray = await this._arrayHelper.mergeItemIntoArray(itemToSave, this.itemArray);
+                // for now, there is nothing special that needs to happen here, 
+                    // since the frontend has the same view of the object as the backend
+                this._logger.debug('successfully put the item!');
             }
             else {
                 this._logger.error('failed to put the item');
@@ -49,7 +59,7 @@ class ItemModel {
 
             if (returnValue) {
                 itemToSave.id = returnValue.id;
-                this.itemArray.push(itemToSave);
+                this.itemArray.push(this._itemHelperitemToSave);
             }
             else {
                 this._logger.error('faield to post player for: ' + JSON.stringify(itemToSave));
@@ -74,7 +84,7 @@ class ItemModel {
         let itemJSON = JSON.stringify(itemToPut);
 
         let returnValue = '';
-        axios({
+        await axios({
             method: 'put',
             url: CATEGORY_URL + itemToPut.id,
             headers: {

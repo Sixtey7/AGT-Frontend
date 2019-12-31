@@ -15,13 +15,17 @@ class ItemHelper {
     massageItems(itemArray) {
         this._logger.debug('Array before massaging: ' + JSON.stringify(itemArray));
         itemArray.forEach(item => {
-            if (item.item_type === 'one_and_done') {
-                item.current_value = (item.current_value === 'true');
-            }
+            this.massageItem(item);
         })
 
         this._logger.debug('Array after massaging: ' + JSON.stringify(itemArray));
         return itemArray;
+    }
+
+    massageItem(item) {
+        if (item.item_type === 'one_and_done') {
+            item.current_value = (item.current_value === 'true');
+        }
     }
 
     /**
@@ -48,6 +52,19 @@ class ItemHelper {
 
         this._logger.debug('returning the map: ' + JSON.stringify(returnMap));
         return returnMap;
+    }
+
+    massageItemForBackend(itemToMassage) {
+        this._logger.debug('Item before the massage: ' + JSON.stringify(itemToMassage));
+
+        if (itemToMassage.item_type === 'one_and_done') {
+            // for one and done's we need to turn the boolean back into a string
+            itemToMassage.current_value = '' + itemToMassage.current_value;
+        }
+
+        this._logger.debug('Item after the massage: ' + JSON.stringify(itemToMassage));
+
+        return itemToMassage;
     }
 }
 
