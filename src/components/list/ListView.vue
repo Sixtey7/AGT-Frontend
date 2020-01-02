@@ -6,7 +6,8 @@
           <v-list-item-title>{{category.name}}</v-list-item-title>
         </template>
         <div v-for="item in itemMap[category.id]" :key="item.id">
-          <OneAndDone :item="item" :logger="logger" @changed="one_and_done_toggle" />
+          <OneAndDone v-if="item.item_type=='one_and_done'" :item="item" :logger="logger" @changed="one_and_done_toggle" />
+          <Tracked v-if="item.item_type=='tracked_positive'" :item="item" :logger="logger" />
         </div>
       </v-list-group>
     </div>
@@ -25,10 +26,13 @@
 import CategoryModel from "../../model/CategoryModel";
 import ItemHelper from "../../utils/ItemHelper";
 import OneAndDone from "../items/OneAndDone";
+import Tracked from '../items/Tracked';
+
 export default {
   name: "ListView",
   components: {
-    OneAndDone
+    OneAndDone,
+    Tracked
   },
   data() {
     return {
