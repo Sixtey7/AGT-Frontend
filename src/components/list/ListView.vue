@@ -5,7 +5,7 @@
         <template v-slot:activator>
           <v-list-item-title>{{category.name}}</v-list-item-title>
         </template>
-        <div v-for="item in itemMap[category.id]" :key="item.id">
+        <div v-for="item in itemMap[category.id]" :key="item.id" class = "list-item-div">
           <OneAndDone v-if="item.item_type=='one_and_done'" :item="item" :logger="logger" @changed="one_and_done_toggle" />
           <Tracked v-if="item.item_type=='tracked_positive'" :item="item" :logger="logger" />
         </div>
@@ -68,3 +68,8 @@ export default {
   }
 };
 </script>
+<style>
+  .list-item-div {
+    text-align: left;
+  }
+</style>
