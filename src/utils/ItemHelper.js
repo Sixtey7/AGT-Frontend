@@ -1,6 +1,7 @@
 /**
  * Class used to facilitate working with items within the frontend
  */
+import moment from 'moment'
 class ItemHelper {
     _logger
 
@@ -25,6 +26,15 @@ class ItemHelper {
     massageItem(item) {
         if (item.item_type === 'one_and_done') {
             item.current_value = (item.current_value === 'true');
+        }
+
+        if (item.goal_date !== '') {
+            this._logger.debug('---' + item.goal_date.slice(0,-4) + '---');
+            item.display_goal_date = moment(item.goal_date.slice(0, -4), 'ddd, DD MMM YYYY HH:mm:ss').format('MMM DD, YYYY');
+        }
+        else {
+            // for now, if there is no goal date, make the end of the year the goal
+            item.display_goal_date = 'Dec 31, 2020'
         }
     }
 
