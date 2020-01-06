@@ -32,14 +32,14 @@ class ItemHelper {
             item.current_value = (item.current_value === 'true');
         }
 
+        this._logger.debug('parsing');
+        let moment_date = moment().endOf('year');
         if (item.goal_date !== '') {
-            this._logger.debug('---' + item.goal_date.slice(0,-4) + '---');
-            item.display_goal_date = moment(item.goal_date.slice(0, -4), 'ddd, DD MMM YYYY HH:mm:ss').format('MMM DD, YYYY');
+            this._logger.debug('setting!');
+            moment_date = moment(item.goal_date.slice(0, -4), 'ddd, DD MMM YYYY HH:mm:ss');
         }
-        else {
-            // for now, if there is no goal date, make the end of the year the goal
-            item.display_goal_date = 'Dec 31, 2020'
-        }
+        this._logger.debug('Date: ' + moment_date);
+        item.display_goal_date = moment_date.format('MMM DD, YYYY');
     }
 
     /**
