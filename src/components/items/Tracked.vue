@@ -19,6 +19,9 @@ export default {
         logger: Object
     },
     computed: {
+        /**
+            Computes the value to be displayed as the ratio
+         */
         currentRatio: function() {
             return "5/10"
         }

@@ -23,6 +23,10 @@ class ItemHelper {
         return itemArray;
     }
 
+    /**
+     * Massages the provided item so it can be rendered by the frontend
+     * @param {Object} item The item to be massaged
+     */
     massageItem(item) {
         if (item.item_type === 'one_and_done') {
             item.current_value = (item.current_value === 'true');
@@ -64,6 +68,10 @@ class ItemHelper {
         return returnMap;
     }
 
+    /**
+     * Massages the item to be passed back to the backend to be stored
+     * @param {Object} itemToMassage The item to be massaged
+     */
     massageItemForBackend(itemToMassage) {
         this._logger.debug('Item before the massage: ' + JSON.stringify(itemToMassage));
 
