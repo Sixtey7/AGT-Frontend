@@ -7,7 +7,7 @@
         </v-list-item-action>
         <v-list-item-content>
           <v-list-item-title v-text="item.name"></v-list-item-title>
-          <v-list-item-subtitle v-if="item.display_goal_date" v-text="item.display_goal_date"></v-list-item-subtitle>
+          <v-list-item-subtitle v-if="item.display_goal_date" v-text="goalDisplay"></v-list-item-subtitle>
         </v-list-item-content>
     </v-list-item>
 </template>
@@ -24,6 +24,9 @@ export default {
          */
         currentRatio: function() {
             return "5/10"
+        },
+        goalDisplay: function() {
+            return this.item.display_goal_date + ' (' + this.item.days_left + ' Days Left!)';
         }
     }
 

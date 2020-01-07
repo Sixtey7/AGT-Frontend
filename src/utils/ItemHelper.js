@@ -32,14 +32,14 @@ class ItemHelper {
             item.current_value = (item.current_value === 'true');
         }
 
-        this._logger.debug('parsing');
-        let moment_date = moment().endOf('year');
+        let goal_date = moment().endOf('year');
         if (item.goal_date !== '') {
-            this._logger.debug('setting!');
-            moment_date = moment(item.goal_date.slice(0, -4), 'ddd, DD MMM YYYY HH:mm:ss');
+            goal_date = moment(item.goal_date.slice(0, -4), 'ddd, DD MMM YYYY HH:mm:ss');
         }
-        this._logger.debug('Date: ' + moment_date);
-        item.display_goal_date = moment_date.format('MMM DD, YYYY');
+        this._logger.debug('Date: ' + goal_date);
+        item.display_goal_date = goal_date.format('MMM DD, YYYY');
+        let duration = moment.duration(goal_date.diff(moment()));
+        item.days_left = Math.floor(duration.asDays());
     }
 
     /**
