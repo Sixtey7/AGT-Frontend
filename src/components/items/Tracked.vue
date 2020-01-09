@@ -25,6 +25,9 @@ export default {
         currentRatio: function() {
             return "5/10"
         },
+        /**
+         * Computes the way to display the goal date
+         */
         goalDisplay: function() {
             return this.item.display_goal_date + ' (' + this.item.days_left + ' Days Left!)';
         }
