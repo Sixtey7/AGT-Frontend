@@ -4,7 +4,12 @@
         props: ['show', 'itemToModify'],
         data: function() {
             return {
-                item: {}
+                item: {},
+                itemTypes: [
+                    { display: 'One and Done', value: 'one_and_done'},
+                    { display: 'Tracked Positive', value: 'tracked_positive'}
+                ]
+
             }
         },
         methods: {
@@ -52,6 +57,18 @@
                                     v-model="item.name"
                                     required>
                                 </v-text-field>
+                            </v-flex>
+                        </v-layout>
+                        <v-layout wrap>
+                            <v-flex xs12 md>
+                                <v-select
+                                    v-model="item.type"
+                                    :items="items"
+                                    item-text="display"
+                                    item-value="value"
+                                    label="Type"
+                                    single-line
+                                ></v-select>
                             </v-flex>
                         </v-layout>
                     </v-container>
