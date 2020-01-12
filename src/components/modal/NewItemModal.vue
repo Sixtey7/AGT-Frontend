@@ -71,6 +71,12 @@
                                 ></v-select>
                             </v-flex>
                         </v-layout>
+                        <div v-if="item.item_type=='one_and_done'">
+                            One and done items here!
+                        </div>
+                        <div v-if="item.item_type=='tracked_positive'">
+                            Tracked Positive Goes here!
+                        </div>
                     </v-container>
                 </v-card-text>
                 <v-card-actions>
