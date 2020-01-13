@@ -1,4 +1,11 @@
 <script>
+    /**
+     * Vue component used to present a modal form to add a new item
+     * @vue-prop {boolean} show - whether or not the form should be shown
+     * @vue-prop {Object} item - The item that should be shown for the form (used when editing)
+     * @vue-event {null} close - Emitted when the user closes the form without saving
+     * @vue-event {Object} save - Emitted when the user presses save, contains a deep copy of the result
+     */
     export default {
         name: 'NewItemModal',
         props: ['show', 'itemToModify'],
@@ -13,17 +20,28 @@
             }
         },
         methods: {
+            /**
+             * Called when the user selects to close the form
+             */
             close() {
                 this.clearValues();
                 this.$emit('close');
             },
+            /**
+             * Called when the user selects to save the item
+             */
             save() {
                 // deep copy the item prior to emitting it
                 this.$emit('save', JSON.parse(JSON.stringify(this.item)));
                 this.clearValues();
             },
+            /**
+             * Utility method used to clear all values in the open form
+             */
             clearValues() {
                 this.item.name = '';
+                // default the item back to one_and_done
+                this.item.type = 'one_and_done';
             }
         },
         watch: {
