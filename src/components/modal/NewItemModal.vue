@@ -81,7 +81,7 @@
                             <v-flex xs12 md>
                                 <v-select
                                     v-model="item.type"
-                                    :items="items"
+                                    :items="itemTypes"
                                     item-text="display"
                                     item-value="value"
                                     label="Type"

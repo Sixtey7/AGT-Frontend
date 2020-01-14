@@ -6,6 +6,7 @@
                     <ListView
                         :categoryModel = "categoryModel"
                         :categoryArray = "categoryModel.categoryArray"
+                        :itemModel = "itemModel"
                         :itemArray = "itemModel.itemArray"
                         :logger = "logger"
                         @updatedItem = "itemUpdated">
