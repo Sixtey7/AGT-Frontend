@@ -1,5 +1,10 @@
 <template>
   <div id = "list-view">
+    <div id = "add-item-div">
+      <v-btn id = "item-add-button" color = "primary" dark @click="showModal">Add
+        <v-icon dark right>add</v-icon>
+      </v-btn>
+    </div>
     <NewItemModal
       :show = "isModalVisible"
       :itemToModify = "itemToModify"

@@ -15,7 +15,8 @@
                 itemTypes: [
                     { display: 'One and Done', value: 'one_and_done'},
                     { display: 'Tracked Positive', value: 'tracked_positive'}
-                ]
+                ],
+                current_type: 'one_and_done'
 
             }
         },
@@ -32,6 +33,7 @@
              */
             save() {
                 // deep copy the item prior to emitting it
+                this.item.item_type = this.current_type;
                 this.$emit('save', JSON.parse(JSON.stringify(this.item)));
                 this.clearValues();
             },
@@ -41,7 +43,8 @@
             clearValues() {
                 this.item.name = '';
                 // default the item back to one_and_done
-                this.item.type = 'one_and_done';
+                this.item.item_type = 'one_and_done';
+                this.current_type = 'one_and_done';
             }
         },
         watch: {
@@ -80,7 +83,7 @@
                         <v-layout wrap>
                             <v-flex xs12 md>
                                 <v-select
-                                    v-model="item.type"
+                                    v-model="current_type"
                                     :items="itemTypes"
                                     item-text="display"
                                     item-value="value"
@@ -89,10 +92,10 @@
                                 ></v-select>
                             </v-flex>
                         </v-layout>
-                        <div v-if="item.item_type=='one_and_done'">
+                        <div v-if="current_type=='one_and_done'">
                             One and done items here!
                         </div>
-                        <div v-if="item.item_type=='tracked_positive'">
+                        <div v-if="current_type=='tracked_positive'">
                             Tracked Positive Goes here!
                         </div>
                     </v-container>
