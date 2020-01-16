@@ -53,6 +53,7 @@
                     // need to set the values of the model if they were provided
                     if (this.itemToModify) {
                         this.item = JSON.parse(JSON.stringify(this.itemToModify));
+                        this.current_type = this.item.item_type;
                     }
                     else {
                         this.clearValues();
