@@ -94,10 +94,22 @@
                             </v-flex>
                         </v-layout>
                         <div v-if="current_type=='one_and_done'">
-                            One and done items here!
+                            <v-checkbox
+                                v-model="item.current_value"
+                                label="Complete"
+                            ></v-checkbox>
                         </div>
                         <div v-if="current_type=='tracked_positive'">
-                            Tracked Positive Goes here!
+                            <v-text-field
+                                v-model="item.current_value"
+                                type="number"
+                                label="Current Value"
+                            ></v-text-field>
+                            <v-text-field
+                                v-model="item.goal_value"
+                                type="number"
+                                label="Goal Value"
+                            ></v-text-field>
                         </div>
                     </v-container>
                 </v-card-text>
