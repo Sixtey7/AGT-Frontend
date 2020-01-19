@@ -1,5 +1,5 @@
 <template>
-    <v-list-item two-line>
+    <v-list-item two-line @click="editItem">
         <v-list-item-action>
             <v-text-field
                 v-text="currentRatio"
@@ -17,6 +17,16 @@ export default {
     props: {
         item: Object,
         logger: Object
+    },
+    methods: {
+        /**
+        * Called when the user clicks on the item, alerts the parent component to edit the item
+        * @vue-event {Object} edit - Emits the item to be edited
+        */
+        editItem: function() {
+         this.logger.debug('gonna edit!');
+        this.$emit("edit", this.item);
+        }
     },
     computed: {
         /**
