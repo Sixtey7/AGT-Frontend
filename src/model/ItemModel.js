@@ -2,7 +2,7 @@ import axios from 'axios'
 import ArrayHelper from '../utils/ArrayHelper';
 import ItemHelper from '../utils/ItemHelper';
 
-const CATEGORY_URL = 'http://localhost:5000/items/';
+const ITEM_URL = 'http://localhost:5000/items/';
 
 class ItemModel {
     itemArray;
@@ -18,7 +18,7 @@ class ItemModel {
         this._itemHelper = new ItemHelper(logger);
 
         axios
-            .get(CATEGORY_URL)
+            .get(ITEM_URL)
             .then(response => {
                 this._logger.debug('Got the response: ' + JSON.stringify(response.data));
 
@@ -86,7 +86,7 @@ class ItemModel {
         let returnValue = '';
         await axios({
             method: 'put',
-            url: CATEGORY_URL + itemToPut.id,
+            url: ITEM_URL + itemToPut.id,
             headers: {
                 'Content-type': 'application/json'
             },
@@ -112,7 +112,7 @@ class ItemModel {
         let returnValue = '';
         await axios({
             method: 'post',
-            url: CATEGORY_URL,
+            url: ITEM_URL,
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -143,7 +143,7 @@ class ItemModel {
 
         await axios({
             method: 'DELETE',
-            url: CATEGORY_URL + idToDelete
+            url: ITEM_URL + idToDelete
         })
         .then(response => {
             if (response.status === 200) {
