@@ -19,6 +19,7 @@
 <script>
 import CategoryModel from './model/CategoryModel';
 import ItemModel from './model/ItemModel';
+import EventModel from './model/EventModel';
 import ListView from './components/list/ListView';
 import Vue from 'vue';
 
@@ -31,7 +32,8 @@ export default {
         return {
             logger: Vue.$log,
             itemModel: new ItemModel(Vue.$log),
-            categoryModel: new CategoryModel(Vue.$log)
+            categoryModel: new CategoryModel(Vue.$log),
+            eventModel: new EventModel(Vue.$log)
         }
     },
     methods: {
