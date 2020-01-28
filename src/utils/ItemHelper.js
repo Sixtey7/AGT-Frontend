@@ -2,11 +2,14 @@
  * Class used to facilitate working with items within the frontend
  */
 import moment from 'moment'
+import DateHelper from './DateHelper';
 class ItemHelper {
-    _logger
+    _logger;
+    _dateHelper;
 
     constructor(logger) {
         this._logger = logger;
+        this._dateHelper = new DateHelper(logger);
     }
 
     /**
@@ -34,10 +37,10 @@ class ItemHelper {
 
         let goal_date = moment().endOf('year');
         if (item.goal_date !== '') {
-            goal_date = moment(item.goal_date.slice(0, -4), 'ddd, DD MMM YYYY HH:mm:ss');
+            goal_date = this._dateHelper.massageDateForFrontend(item.goal_date);
         }
         this._logger.debug('Date: ' + goal_date);
-        item.display_goal_date = goal_date.format('MMM DD, YYYY');
+        item.display_goal_date = this._dateHelper.createDisplayDate(goal_date);
         let duration = moment.duration(goal_date.diff(moment()));
         item.days_left = Math.floor(duration.asDays());
     }

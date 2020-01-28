@@ -59,16 +59,16 @@ class ItemModel {
 
             if (returnValue) {
                 itemToSave.id = returnValue.id;
-                this.itemArray.push(this._itemHelperitemToSave);
+                this.itemArray.push(itemToSave);
             }
             else {
-                this._logger.error('faield to post player for: ' + JSON.stringify(itemToSave));
+                this._logger.error('faield to post event for: ' + JSON.stringify(itemToSave));
             }
         }
     }
 
     async deleteItem(idToDelete) {
-        this._logger.debug('Deleting a item with id: ' + idToDelete);
+        this._logger.debug('Deleting an item with id: ' + idToDelete);
 
         let returnValue = await this._deleteItem(idToDelete);
 
@@ -150,8 +150,11 @@ class ItemModel {
                 returnValue = true;
             }
             else {
-                this._logger.error('Failed to delete a player with id: ' + idToDelete + ' got the status: ' + response.status);
+                this._logger.error('Failed to delete an item with id: ' + idToDelete + ' got the status: ' + response.status);
             }
+        })
+        .catch(err => {
+            this._logger.error('got an error attempting to delete an item: ' + err);
         });
 
         return returnValue;
