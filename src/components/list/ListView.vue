@@ -74,7 +74,7 @@ export default {
         this.isModalVisible = true;
       },
       /**
-       * Called to close the model.  Hides the modal and nulls out the value
+       * Called to close the modal.  Hides the modal and nulls out the value
        */
       closeModal() {
         this.isModalVisible = false;
