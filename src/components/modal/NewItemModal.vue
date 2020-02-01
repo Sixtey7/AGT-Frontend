@@ -8,7 +8,7 @@
      */
     export default {
         name: 'NewItemModal',
-        props: ['show', 'itemToModify'],
+        props: ['show', 'itemToModify', 'categories'],
         data: function() {
             return {
                 item: {},
@@ -79,6 +79,18 @@
                                     v-model="item.name"
                                     required>
                                 </v-text-field>
+                            </v-flex>
+                        </v-layout>
+                        <v-layout wrap>
+                            <v-flex xs12 md>
+                                <v-select
+                                    v-model = "item.category_id"
+                                    :items = "categories"
+                                    item-text = "name"
+                                    item-value = "id"
+                                    label="Category"
+                                    single-line
+                                ></v-select>
                             </v-flex>
                         </v-layout>
                         <v-layout wrap>

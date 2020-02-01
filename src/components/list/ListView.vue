@@ -8,6 +8,7 @@
     <NewItemModal
       :show = "isModalVisible"
       :itemToModify = "itemToModify"
+      :categories = "categoryArray"
       @close = "closeModal"
       @save = "saveItem"
     />
