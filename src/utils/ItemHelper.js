@@ -13,6 +13,18 @@ class ItemHelper {
     }
 
     /**
+     * Fleshes out the newly created item by filling out any default properties that are needed
+     * @param {Object} item the item to be fleshed out
+     */
+    createNewItem(item) {
+        if (item.item_type === 'one_and_done') {
+            item.goal_value = 'true';
+        }
+
+        return item;
+    }
+
+    /**
      * Massages the item array returned from the backend for easy handling by the frontend
      * @param {Array} itemArray The array to be massaged
      */

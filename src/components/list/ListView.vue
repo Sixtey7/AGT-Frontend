@@ -89,6 +89,7 @@ export default {
         this.isModalVisible = false;
         this.itemToModify = null;
 
+        itemToSave = this.itemHelper.createNewItem(itemToSave);
         this.itemModel.saveItem(itemToSave);
       },
       /**
