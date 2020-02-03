@@ -19,8 +19,8 @@
             <v-list-item-title>{{category.name}}</v-list-item-title>
           </template>
           <div v-for="item in itemMap[category.id]" :key="item.id" class = "list-item-div">
-            <OneAndDone v-if="item.item_type=='one_and_done'" :item="item" :logger="logger" @changed="one_and_done_toggle" />
-            <Tracked v-if="item.item_type=='tracked_positive'" :item="item" :logger="logger" />
+            <OneAndDone v-if="item.item_type=='one_and_done'" :item="item" :logger="logger" @changed="one_and_done_toggle" @edit="editItem"/>
+            <Tracked v-if="item.item_type=='tracked_positive'" :item="item" :logger="logger" @edit="editItem"/>
           </div>
         </v-list-group>
       </div>
@@ -80,6 +80,11 @@ export default {
       closeModal() {
         this.isModalVisible = false;
         this.itemToModify = null;
+      },
+      editItem(itemToEdit) {
+        this.logger.debug('going to edit item: ' + JSON.stringify(itemToEdit));
+        this.itemToModify = itemToEdit;
+        this.isModalVisible = true;
       },
       /**
        * Called when the user selects to save a new/modified item
