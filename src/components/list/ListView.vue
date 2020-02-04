@@ -81,6 +81,10 @@ export default {
         this.isModalVisible = false;
         this.itemToModify = null;
       },
+      /**
+      * Called when the user clicks on an item.  Triggered by the 'edit' event from 
+      * one of the child components
+       */
       editItem(itemToEdit) {
         this.logger.debug('going to edit item: ' + JSON.stringify(itemToEdit));
         this.itemToModify = itemToEdit;
