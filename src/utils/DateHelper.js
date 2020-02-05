@@ -18,6 +18,10 @@ class DateHelper {
         return moment(dateToMassage.slice(0, -4), 'ddd, DD MMM YYYY HH:mm:ss');
     }
 
+    massageDateForBackend(dateToMassage) {
+        return moment(dateToMassage).format('ddd, DD MMM YYYY HH:mm:ss');
+    }
+
     /**
      * Returns a string representation of the date for display to a user
      * @param {Object} dateObj Javascript date object 
