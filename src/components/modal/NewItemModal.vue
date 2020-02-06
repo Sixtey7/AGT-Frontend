@@ -123,6 +123,12 @@
                                 label="Goal Value"
                             ></v-text-field>
                         </div>
+                        <v-layout wrap>
+                            <v-date-picker
+                                label = "Goal Date"
+                                v-model = "goal_date">
+                            </v-date-picker>
+                        </v-layout>
                     </v-container>
                 </v-card-text>
                 <v-card-actions>
