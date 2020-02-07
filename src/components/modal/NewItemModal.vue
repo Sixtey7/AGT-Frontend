@@ -12,6 +12,7 @@
         data: function() {
             return {
                 item: {},
+                menu: false,
                 itemTypes: [
                     { display: 'One and Done', value: 'one_and_done'},
                     { display: 'Tracked Positive', value: 'tracked_positive'}
@@ -123,12 +124,27 @@
                                 label="Goal Value"
                             ></v-text-field>
                         </div>
-                        <v-layout wrap>
-                            <v-date-picker
-                                label = "Goal Date"
-                                v-model = "goal_date">
-                            </v-date-picker>
-                        </v-layout>
+                        <v-flex xs12 sm6>
+                            <v-menu
+                                v-model="menu"
+                                :close-on-content-click="false"
+                                :nudge-right="40"
+                                transition="scale-transition"
+                                offset-y
+                                min-width="290px"
+                            >
+                                <template v-slot:activator="{ on }">
+                                <v-text-field
+                                    v-model="item.goal_date"
+                                    label="Date"
+                                    prepend-icon="event"
+                                    readonly
+                                    v-on="on"
+                                ></v-text-field>
+                                </template>
+                                <v-date-picker v-model="item.goal_date" @input="menu = false"></v-date-picker>
+                            </v-menu>
+                        </v-flex>
                     </v-container>
                 </v-card-text>
                 <v-card-actions>
