@@ -90,9 +90,10 @@ class ItemHelper {
     massageItemForBackend(itemToMassage) {
         this._logger.debug('Item before the massage: ' + JSON.stringify(itemToMassage));
 
-        if (itemToMassage.goal_date) {
+        //Don't need to do this right now, the backend handles the frontend date format
+        /*if (itemToMassage.goal_date) {
             itemToMassage.goal_date = this._dateHelper.massageDateForBackend(itemToMassage.goal_date);
-        }
+        }*/
 
         if (itemToMassage.item_type === 'one_and_done') {
             // for one and done's we need to turn the boolean back into a string
