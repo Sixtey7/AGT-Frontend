@@ -33,7 +33,7 @@ export default {
             Computes the value to be displayed as the ratio
          */
         currentRatio: function() {
-            return "5/10"
+            return this.item.current_value + '/' + this.item.goal_value
         },
         /**
          * Computes the way to display the goal date
