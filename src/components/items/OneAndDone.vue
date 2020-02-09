@@ -1,5 +1,5 @@
 <template>
-  <v-list-item two-line @click="editItem">
+  <v-list-item two-line>
     <v-list-item-action>
       <v-checkbox
         v-model="item.current_value"
@@ -7,7 +7,7 @@
         @change="one_and_done_toggle()"
       ></v-checkbox>
     </v-list-item-action>
-    <v-list-item-content>
+    <v-list-item-content @click="editItem">
       <v-list-item-title v-text="item.name"></v-list-item-title>
       <v-list-item-subtitle v-if="item.display_goal_date" v-text="goalDisplay"></v-list-item-subtitle>
     </v-list-item-content>
