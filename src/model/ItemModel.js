@@ -2,14 +2,23 @@ import axios from 'axios'
 import ArrayHelper from '../utils/ArrayHelper';
 import ItemHelper from '../utils/ItemHelper';
 
+// URL to find the backend item service at
 const ITEM_URL = 'http://localhost:5000/items/';
 
+/**
+ * Model class used to store the item array and communicate with the backend
+ */
 class ItemModel {
     itemArray;
     _arrayHelper;
     _itemHelper;
     _logger;
 
+    /**
+     * Builds a new clean instance of the item model
+     * Queries the backend for all of the items
+     * @param {Object} logger - logger to be used by the process 
+     */
     constructor(logger) {
         this._logger = logger;
         this._logger.debug('Standing up the Item Model!');
@@ -28,6 +37,10 @@ class ItemModel {
             });
     }
 
+    /**
+     * Adds the provided item (new or update) to the collection and sends it to the backend
+     * @param {Item} itemToSaveInput The item to be saved to the backend
+     */
     async saveItem(itemToSaveInput) {
         //deep copy the item before manipulating it
         let itemToSave = JSON.parse(JSON.stringify(itemToSaveInput));
@@ -67,6 +80,10 @@ class ItemModel {
         }
     }
 
+    /**
+     * Removes the item with the provided id from the maintainined collection and tells the backedn to delete it
+     * @param {String} idToDelete String containing the UUID to be deleted 
+     */
     async deleteItem(idToDelete) {
         this._logger.debug('Deleting an item with id: ' + idToDelete);
 
@@ -80,6 +97,11 @@ class ItemModel {
         }
     }
 
+    /**
+     * Helper method used to call the put endpoint on the backend
+     * @param {Object} itemToPut the item to be sent to the backend
+     * @private 
+     */
     async _putItem(itemToPut) {
         let itemJSON = JSON.stringify(itemToPut);
 
@@ -104,6 +126,11 @@ class ItemModel {
         return returnValue;
     }
 
+    /**
+     * Helper method used to call the post endpoint on the backend
+     * @param {Object} itemToPost the item to be sent to the backend
+     * @private 
+     */
     async _postItem(itemToPost) {
         //need to delete the empty id to prevent the backend from being confused
         delete itemToPost.id;
@@ -136,6 +163,11 @@ class ItemModel {
         return returnValue;
     }
 
+    /**
+     * Helper method used to call the delete endpoint on the backend
+     * @param {String} idToDelete UUID of the item to delete from the backend
+     * @private 
+     */
     async _deleteItem(idToDelete) {
         this._logger.debug('Deleting a item with id: ' + idToDelete);
 
