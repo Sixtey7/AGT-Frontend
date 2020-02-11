@@ -99,7 +99,7 @@ class ItemModel {
 
     /**
      * Helper method used to call the put endpoint on the backend
-     * @param {Object} itemToPut the item to be sent to the backend
+     * @param {Item} itemToPut the item to be sent to the backend
      * @private 
      */
     async _putItem(itemToPut) {
@@ -128,7 +128,7 @@ class ItemModel {
 
     /**
      * Helper method used to call the post endpoint on the backend
-     * @param {Object} itemToPost the item to be sent to the backend
+     * @param {Item} itemToPost the item to be sent to the backend
      * @private 
      */
     async _postItem(itemToPost) {

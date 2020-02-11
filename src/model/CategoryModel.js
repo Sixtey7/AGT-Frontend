@@ -1,6 +1,7 @@
 import axios from 'axios'
 import ArrayHelper from '../utils/ArrayHelper';
 
+// URL to find the backend category service at
 const CATEGORY_URL = 'http://localhost:5000/categories/';
 
 class CategoryModel {
@@ -8,6 +9,11 @@ class CategoryModel {
     _arrayHelper;
     _logger;
 
+    /**
+     * Builds a clean instance of the category model
+     * Queries the backend for all of the categories
+     * @param {Object} logger The logger instance to be used 
+     */
     constructor(logger) {
         this._logger = logger;
         this._logger.debug('Standing up the Category Model!');
@@ -25,6 +31,10 @@ class CategoryModel {
             });
     }
 
+    /**
+     * Adds the provided category (new or updated) to the collection and sends it to the backend to be persisted
+     * @param {Category} categoryToSave the Category object to be saved
+     */
     async saveCategory(categoryToSave) {
         //determine if this is an existing category or a new one
         if (categoryToSave.id) {
@@ -54,6 +64,11 @@ class CategoryModel {
         }
     }
 
+    /**
+     * Removes the category with the provided id from the maintained collection 
+     * and calls the backend to delete it
+     * @param {String} idToDelete string containing the UUID to be saved 
+     */
     async deleteCategory(idToDelete) {
         this._logger.debug('Deleting a category with id: ' + idToDelete);
 
@@ -67,6 +82,10 @@ class CategoryModel {
         }
     }
 
+    /**
+     * Helper method used to call the put endpoint on the backend
+     * @param {Category} categoryToPut Category object to be sent to the backend 
+     */
     async _putCategory(categoryToPut) {
         let categoryJSON = JSON.stringify(categoryToPut);
 
@@ -91,6 +110,10 @@ class CategoryModel {
         return returnValue;
     }
 
+    /**
+     * Helper method used to call the post endpoint on the backend
+     * @param {Category} categoryToPost the Category object to be sent to the backend 
+     */
     async _postCategory(categoryToPost) {
         //need to delete the empty id to prevent the backend from being confused
         delete categoryToPost.id;
@@ -123,6 +146,10 @@ class CategoryModel {
         return returnValue;
     }
 
+    /**
+     * Helper method used to call the delete endpoint on the backend
+     * @param {String} idToDelete String containing the UUID to be sent to the backend 
+     */
     async _deleteCategory(idToDelete) {
         this._logger.debug('Deleting a category with id: ' + idToDelete);
 

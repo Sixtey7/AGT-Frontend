@@ -2,14 +2,23 @@ import axios from 'axios';
 import ArrayHelper from '../utils/ArrayHelper';
 import EventHelper from '../utils/EventHelper';
 
+// URL to find the backend event service at
 const EVENT_URL = 'http://localhost:5000/events/';
 
+/**
+ * Model class used to store the event array and communicate with the backend
+ */
 class EventModel {
     eventArray;
     _arrayHelper;
     _eventHelper;
     _logger;
 
+    /**
+     * Builds a clean instanceof the event model
+     * Queries the backend for all of the events
+     * @param {Object} logger The logger instance to be used 
+     */
     constructor(logger) {
         this._logger = logger;
         this._logger.debug('Standing up the Event Model!');
@@ -27,6 +36,10 @@ class EventModel {
             });
     }
 
+    /**
+     * Adds the provided event (new or updated) to the collection and sends it to the backend
+     * @param {Event} eventToSaveInput The Event to be saved to the backend 
+     */
     async saveEvent(eventToSaveInput) {
         // deep copy the evet prior to manupulating it
         let eventToSave = JSON.parse(JSON.stringify(eventToSaveInput));
@@ -61,6 +74,10 @@ class EventModel {
         }
     }
 
+    /**
+     * Removes the event with the provided id from the maintained collection and removes it from the backend
+     * @param {String} idToDelete the id of the event to be deleted 
+     */
     async deleteEvent(idToDelete) {
         this._logger.delete('Deleting an event with id: ' + idToDelete);
 
@@ -75,6 +92,11 @@ class EventModel {
         }
     }
 
+    /**
+     * Helper method used to call the put endpoint on the backend
+     * @param {Event} eventToPut the event to be sent to the backend
+     * @private 
+     */
     async _putEvent(eventToPut) {
         let eventJSON = JSON.stringify(eventToPut);
 
@@ -99,6 +121,11 @@ class EventModel {
         return returnValue;
     }
 
+    /**
+     * Helper method used to call the post endpoint on the backend
+     * @param {Event} eventToPost the event to be sent to the backend
+     * @private 
+     */
     async _postEvent(eventToPost) {
         // need to delete the empty id to prevent the backend from being confused
         delete eventToPost.id;
@@ -130,6 +157,11 @@ class EventModel {
         return returnValue;
     }
 
+    /**
+     * Helper method used to call the delete endpoint on the backend
+     * @param {String} idToDelete string holding the UUID to be sent to the backend 
+     * @private
+     */
     async _deleteEvent(idToDelete) {
         this._logger.delete('Deleting an event with id: ' + idToDelete);
 
