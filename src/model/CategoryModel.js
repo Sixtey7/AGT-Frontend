@@ -85,6 +85,7 @@ class CategoryModel {
     /**
      * Helper method used to call the put endpoint on the backend
      * @param {Category} categoryToPut Category object to be sent to the backend 
+     * @private
      */
     async _putCategory(categoryToPut) {
         let categoryJSON = JSON.stringify(categoryToPut);
@@ -113,6 +114,7 @@ class CategoryModel {
     /**
      * Helper method used to call the post endpoint on the backend
      * @param {Category} categoryToPost the Category object to be sent to the backend 
+     * @private
      */
     async _postCategory(categoryToPost) {
         //need to delete the empty id to prevent the backend from being confused
@@ -149,6 +151,7 @@ class CategoryModel {
     /**
      * Helper method used to call the delete endpoint on the backend
      * @param {String} idToDelete String containing the UUID to be sent to the backend 
+     * @private
      */
     async _deleteCategory(idToDelete) {
         this._logger.debug('Deleting a category with id: ' + idToDelete);
