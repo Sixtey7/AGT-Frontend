@@ -21,6 +21,7 @@
           <div v-for="item in itemMap[category.id]" :key="item.id" class = "list-item-div">
             <OneAndDone v-if="item.item_type=='one_and_done'" :item="item" :logger="logger" @changed="one_and_done_toggle" @edit="editItem"/>
             <Tracked v-if="item.item_type=='tracked_positive'" :item="item" :logger="logger" @edit="editItem"/>
+            <NewTracked v-if="item.item_type=='tracked_positive'" :item="item" :logger="logger"/>
           </div>
         </v-list-group>
       </div>
@@ -43,13 +44,15 @@ import ItemHelper from "../../utils/ItemHelper";
 import NewItemModal from '../modal/NewItemModal';
 import OneAndDone from "../items/OneAndDone";
 import Tracked from '../items/Tracked';
+import NewTracked from '../items/NewTracked';
 
 export default {
   name: "ListView",
   components: {
     NewItemModal,
     OneAndDone,
-    Tracked
+    Tracked,
+    NewTracked
   },
   data() {
     return {
