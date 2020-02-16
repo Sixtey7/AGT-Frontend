@@ -12,6 +12,12 @@
       @close = "closeModal"
       @save = "saveItem"
     />
+    <TrackedItemModal
+      :show = "isTrackedModalVisible"
+      :trackedItem = "trackedItemToModify"
+      @close = "closeTrackedModal"
+      @save = "saveTrackedModal"
+    />
     <v-card max-width="600" class="mx-auto">
       <div id="category-item-list-div">
         <v-list-group v-for="category in categoryArray" :key="category.id">
@@ -41,6 +47,7 @@ import CategoryModel from "../../model/CategoryModel";
 import ItemModel from '../../model/ItemModel';
 import ItemHelper from "../../utils/ItemHelper";
 import NewItemModal from '../modal/NewItemModal';
+import TrackedItemModal from '../modal/TrackedItemModal';
 import OneAndDone from "../items/OneAndDone";
 import Tracked from '../items/Tracked';
 
@@ -48,6 +55,7 @@ export default {
   name: "ListView",
   components: {
     NewItemModal,
+    TrackedItemModal,
     OneAndDone,
     Tracked
   },
@@ -56,7 +64,9 @@ export default {
       itemHelper: new ItemHelper(this.logger),
       itemMap: new Map(),
       isModalVisible: false,
-      itemToModify: null
+      isTrackedModalVisible: false,
+      itemToModify: null,
+      trackedItemToModify: null
     };
   },
   props: {
@@ -80,6 +90,22 @@ export default {
       closeModal() {
         this.isModalVisible = false;
         this.itemToModify = null;
+      },
+      /**
+       * Opens the tracked item modal
+       */
+      showTrackedModal() {
+        this.logger.debug('Opening the tracked modal!');
+        this.isTrackedModalVisible = true;
+
+      },
+      /**
+       * Called to close the tracked modal.  Hides the modal and nulls out the associated value
+       */
+      closeTrackedModal() {
+        this.logger.debug('Closing the tracked modal');
+        this.isTrackedModalVisible = false;
+        this.trackedItemToModify = null;
       },
       /**
       * Called when the user clicks on an item.  Triggered by the 'edit' event from 
