@@ -5,7 +5,9 @@ export default {
     data: function() {
         return {
             item: {},
-            menu: false
+            menu: false,
+            delete_dialog: false,
+            itemToDelete: {}
         }
     },
     methods: {
@@ -20,13 +22,22 @@ export default {
         clearValues() {
             //TODO if needed
         },
-        deleteEvent(eventId) {
-            this.logger.debug('Deleting an event with id: ' + eventId);
-            // TODO
+        deleteEvent(event) {
+            this.logger.debug('Deleting an event with id: ' + event.id);
+            this.itemToDelete = event;
+            this.delete_dialog = true;
         },
         editEvent(eventId) {
             this.logger.debug('Editing an event with id: ' + eventId);
-            // TODO
+        },
+        closeDeleteDialog() {
+            this.delete_dialog = false;
+            this.itemToDelete = {};
+        },
+        confirmEventDelete(idToDelete) {
+            this.logger.debug("Confirmed removal of event with id: " + idToDelete);
+            this.delete_dialog = false;
+            this.itemToDelete = {};
         }
     },
     watch: {
@@ -42,6 +53,35 @@ export default {
 }
 </script>
 <template>
+<div>
+    <v-dialog
+        v-model = "delete_dialog"
+        max-width="290"
+    >
+        <v-card>
+            <v-card-title>Confirm Deletion</v-card-title>
+            <v-card-text>
+                Confirm deletion of event on<br>{{ itemToDelete.date }}
+            </v-card-text>
+            <v-card-actions>
+                <v-btn
+                    color = "red darken-1"
+                    text
+                    @click = "closeDeleteDialog"
+                >
+                    Nope
+                </v-btn>
+
+                <v-btn
+                    color = "green darken-1"
+                    text
+                    @click = "confirmEventDelete(itemToDelete.id)"
+                >
+                    Yup
+                </v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
     <v-layout row justify-center>
         <v-dialog v-model = "show" max-width="600px">
             <v-card>
@@ -57,7 +97,7 @@ export default {
                             </v-list-item-content>
                             <v-list-item-action>
                                 <div>
-                                    <v-btn icon @click="deleteEvent(event.id)">
+                                    <v-btn icon @click="deleteEvent(event)">
                                         <v-icon>mdi-delete</v-icon>
                                     </v-btn>
                                     <v-btn icon @click="editEvent(event.id)">
@@ -71,6 +111,7 @@ export default {
             </v-card>
         </v-dialog>
     </v-layout>
+</div>
 </template>
 <style scoped>
 * {
