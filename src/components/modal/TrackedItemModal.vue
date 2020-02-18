@@ -1,7 +1,7 @@
 <script>
 export default {
     name: 'TrackedItemModal',
-    props: ['show', 'trackedItem'],
+    props: ['show', 'trackedItem', 'logger'],
     data: function() {
         return {
             item: {},
@@ -19,6 +19,14 @@ export default {
         },
         clearValues() {
             //TODO if needed
+        },
+        deleteEvent(eventId) {
+            this.logger.debug('Deleting an event with id: ' + eventId);
+            // TODO
+        },
+        editEvent(eventId) {
+            this.logger.debug('Editing an event with id: ' + eventId);
+            // TODO
         }
     },
     watch: {
@@ -41,11 +49,22 @@ export default {
                     <span class = "headline">{{ item.name }}</span>
                 </v-card-title>
                 <v-card-text>
+                    <h3>Events</h3>
                     <v-list>
                         <v-list-item v-for="event in item.events" :key="event.id">
                             <v-list-item-content>
                                 <v-list-item-title v-text="event.date"></v-list-item-title>
                             </v-list-item-content>
+                            <v-list-item-action>
+                                <div>
+                                    <v-btn icon @click="deleteEvent(event.id)">
+                                        <v-icon>mdi-delete</v-icon>
+                                    </v-btn>
+                                    <v-btn icon @click="editEvent(event.id)">
+                                        <v-icon>mdi-pencil</v-icon>
+                                    </v-btn>
+                                </div>
+                            </v-list-item-action>
                         </v-list-item>
                     </v-list>
                 </v-card-text>

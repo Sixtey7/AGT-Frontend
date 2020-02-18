@@ -15,6 +15,7 @@
     <TrackedItemModal
       :show = "isTrackedModalVisible"
       :trackedItem = "trackedItemToModify"
+      :logger = "logger"
       @close = "closeTrackedModal"
       @save = "saveTrackedModal"
     />
@@ -26,7 +27,7 @@
           </template>
           <div v-for="item in itemMap[category.id]" :key="item.id" class = "list-item-div">
             <OneAndDone v-if="item.item_type=='one_and_done'" :item="item" :logger="logger" @changed="one_and_done_toggle" @edit="editItem"/>
-            <Tracked v-if="item.item_type=='tracked_positive'" :item="item" :logger="logger" @edit="editItem"/>
+            <Tracked v-if="item.item_type=='tracked_positive'" :item="item" :logger="logger" @edit="editItem" @viewTracked="viewTrackedItem"/>
           </div>
         </v-list-group>
       </div>
@@ -137,6 +138,11 @@ export default {
         "got a one and done change event: " + JSON.stringify(updatedItem)
       );
       this.$emit("updatedItem", updatedItem);
+    },
+    viewTrackedItem: function (trackedItem) {
+      this.logger.debug('Opening the tracked item modal for item: ' + trackedItem.id);
+      this.trackedItemToModify = trackedItem;
+      this.isTrackedModalVisible = true;
     }
   },
   watch: {

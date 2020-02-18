@@ -10,7 +10,7 @@
           <v-list-item-subtitle v-if="item.display_goal_date" v-text="goalDisplay"></v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-action>
-            <v-btn icon>
+            <v-btn icon @click = "viewItemEvents(item.id)">
                 <v-icon>mdi-clipboard-text</v-icon>
             </v-btn>
         </v-list-item-action>
@@ -31,6 +31,10 @@ export default {
         editItem: function() {
          this.logger.debug('gonna edit!');
         this.$emit("edit", this.item);
+        },
+        viewItemEvents(item_id) {
+            this.logger.debug('viewing item events for id: ' + item_id + '!');
+            this.$emit("viewTracked", this.item);
         }
     },
     computed: {
