@@ -109,6 +109,15 @@ export default {
         this.trackedItemToModify = null;
       },
       /**
+       * Called to save the tracked item from the modal
+       */
+      saveTrackedModal(trackedItemToSave) {
+        // TODO
+        this.logger.debug('Got a call to save the tracked item + ' + JSON.stringify(trackedItemToSave));
+        this.isTrackedModalVisible = false;
+        this.trackedItemToModify = null;
+      },
+      /**
       * Called when the user clicks on an item.  Triggered by the 'edit' event from 
       * one of the child components
        */
