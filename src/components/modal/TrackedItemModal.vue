@@ -7,6 +7,7 @@ export default {
             item: {},
             menu: false,
             delete_dialog: false,
+            add_dialog: false,
             eventToDelete: {}
         }
     },
@@ -68,7 +69,7 @@ export default {
         <v-card>
             <v-card-title>Confirm Deletion</v-card-title>
             <v-card-text>
-                Confirm deletion of event on<br>{{ itemToDelete.date }}
+                Confirm deletion of event on<br>{{ eventToDelete.date }}
             </v-card-text>
             <v-card-actions>
                 <v-btn
@@ -82,12 +83,20 @@ export default {
                 <v-btn
                     color = "green darken-1"
                     text
-                    @click = "confirmEventDelete(itemToDelete.id)"
+                    @click = "confirmEventDelete(eventToDelete.id)"
                 >
                     Yup
                 </v-btn>
             </v-card-actions>
         </v-card>
+    </v-dialog>
+    <v-dialog
+        v-model = "add_dialog"
+        max-width="290"
+    >
+        <v-carD>
+            <v-card-title>Add Event</v-card-title>
+        </v-carD>
     </v-dialog>
     <v-layout row justify-center>
         <v-dialog v-model = "show" max-width="600px">
