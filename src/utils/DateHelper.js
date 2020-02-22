@@ -29,6 +29,10 @@ class DateHelper {
     createDisplayDate(dateObj) {
         return dateObj.format('MMM DD, YYYY');
     }
+
+    getTodayString() {
+        return moment().toISOString().substr(0, 10);
+    }
 }
 
 export default DateHelper;

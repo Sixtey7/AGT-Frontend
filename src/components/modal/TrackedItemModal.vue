@@ -1,4 +1,6 @@
 <script>
+import DateHelper from '../../utils/DateHelper';
+
 export default {
     name: 'TrackedItemModal',
     props: ['show', 'trackedItem', 'logger'],
@@ -8,7 +10,10 @@ export default {
             menu: false,
             delete_dialog: false,
             add_dialog: false,
-            eventToDelete: {}
+            date_helper: new DateHelper(this.logger),
+            eventToDelete: {},
+            date_selection: {}
+            
         }
     },
     methods: {
@@ -21,7 +26,8 @@ export default {
             this.clearValues();
         },
         clearValues() {
-            //TODO if needed
+            this.eventToDelete = {};
+            this.date_selection = this.date_helper.getTodayString();
         },
         deleteEvent(event) {
             this.logger.debug('Deleting an event with id: ' + event.id);
@@ -46,11 +52,21 @@ export default {
             this.logger.debug("Confirmed removal of event with id: " + idToDelete);
             this.delete_dialog = false;
             this.eventToDelete = {};
+        },
+        closeAddDialog() {
+            this.add_dialog = false;
+            this.date_selection = this.date_helper.getTodayString();
+        },
+        saveAddDialog() {
+            this.add_dialog = false;
+            this.date_selection = this.date_helper.getTodayString();
+            //TODO
         }
     },
     watch: {
         show: function(show) {
             if (show) {
+                this.clearValues();
                 this.item = JSON.parse(JSON.stringify(this.trackedItem))
             }
             else {
@@ -92,17 +108,43 @@ export default {
     </v-dialog>
     <v-dialog
         v-model = "add_dialog"
-        max-width="290"
+        max-width="400"
     >
-        <v-carD>
+        <v-card>
             <v-card-title>Add Event</v-card-title>
-        </v-carD>
+            <v-card-text>
+                <v-date-picker v-model="date_selection" color = "green lighten-1"></v-date-picker>
+            </v-card-text>
+            <v-card-actions>
+                <v-btn
+                    color = "red darken-1"
+                    text
+                    @click = "closeAddDialog"
+                >
+                    Cancel
+                </v-btn>
+
+                <v-btn
+                    color = "green darken-1"
+                    text
+                    @click = "saveAddDialog"
+                >
+                    Save
+                </v-btn>
+            </v-card-actions>
+        </v-card>
     </v-dialog>
     <v-layout row justify-center>
         <v-dialog v-model = "show" max-width="600px">
             <v-card>
                 <v-card-title>
                     <span class = "headline">{{ item.name }}</span>
+                    <v-btn
+                        color = "green darken-1"
+                        text
+                        @click="add_dialog = true;"
+                    >Add
+                    </v-btn>
                 </v-card-title>
                 <v-card-text>
                     <h3>Events</h3>
