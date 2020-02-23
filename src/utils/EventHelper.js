@@ -1,4 +1,5 @@
 import DateHelper from './DateHelper';
+const uuid4 = require('uuid/v4');
 
 /**
  * Class used to facilitate working with events within the frontend
@@ -25,6 +26,17 @@ class EventHelper {
 
         this._logger.debug('Event array after massaging: ' + JSON.stringify(eventArray));
         return eventArray;
+    }
+
+    buildEvent(input_item_id, input_date) {
+        let new_event = {
+            id: uuid4(),
+            item_id: input_item_id,
+            date: input_date,
+            value: 'True'
+        };
+
+        return new_event;
     }
 }
 

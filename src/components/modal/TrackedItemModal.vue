@@ -1,5 +1,6 @@
 <script>
 import DateHelper from '../../utils/DateHelper';
+import EventHelper from '../../utils/EventHelper';
 
 export default {
     name: 'TrackedItemModal',
@@ -11,6 +12,7 @@ export default {
             delete_dialog: false,
             add_dialog: false,
             date_helper: new DateHelper(this.logger),
+            event_helper: new EventHelper(this.logger),
             eventToDelete: {},
             date_selection: {}
             
@@ -58,9 +60,13 @@ export default {
             this.date_selection = this.date_helper.getTodayString();
         },
         saveAddDialog() {
+            let new_event = this.event_helper.buildEvent(this.item.id, this.date_selection);
+            this.item.events.push(new_event);
+            this.$emit('new_event', new_event);
             this.add_dialog = false;
             this.date_selection = this.date_helper.getTodayString();
-            //TODO
+            
+
         }
     },
     watch: {
@@ -72,6 +78,11 @@ export default {
             else {
                 this.clearValues();
             }
+        }
+    },
+    filters: {
+        format_date: function (in_date) {
+            return in_date.substring(5, 16);
         }
     }
 }
@@ -151,7 +162,7 @@ export default {
                     <v-list>
                         <v-list-item v-for="event in item.events" :key="event.id">
                             <v-list-item-content>
-                                <v-list-item-title v-text="event.date"></v-list-item-title>
+                                <v-list-item-title> {{ event.date | format_date }} </v-list-item-title>
                             </v-list-item-content>
                             <v-list-item-action>
                                 <div>
