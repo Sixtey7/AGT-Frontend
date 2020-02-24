@@ -60,9 +60,14 @@ export default {
             this.date_selection = this.date_helper.getTodayString();
         },
         saveAddDialog() {
+            // build the event out of entered values
             let new_event = this.event_helper.buildEvent(this.item.id, this.date_selection);
             this.item.events.push(new_event);
+
+            // emit the event for the parent to know to add the event
             this.$emit('new_event', new_event);
+
+            // reset the values back on the dialog
             this.add_dialog = false;
             this.date_selection = this.date_helper.getTodayString();
             

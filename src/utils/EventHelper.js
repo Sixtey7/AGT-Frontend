@@ -28,6 +28,12 @@ class EventHelper {
         return eventArray;
     }
 
+
+    /**
+     * Builds and returns an event based on the provided parameters.  Assigns a random UUID for the id
+     * @param {String} input_item_id String containing the UUID of the parent item
+     * @param {String} input_date String containing the date for the event
+     */
     buildEvent(input_item_id, input_date) {
         let new_event = {
             id: uuid4(),

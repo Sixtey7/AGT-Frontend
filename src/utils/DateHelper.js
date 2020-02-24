@@ -30,6 +30,9 @@ class DateHelper {
         return dateObj.format('MMM DD, YYYY');
     }
 
+    /**
+     * Returns the string version of today's date
+     */
     getTodayString() {
         return moment().toISOString().substr(0, 10);
     }
