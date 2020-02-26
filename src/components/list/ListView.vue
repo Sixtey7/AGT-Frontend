@@ -18,6 +18,8 @@
       :logger = "logger"
       @close = "closeTrackedModal"
       @save = "saveTrackedModal"
+      @new_event = "addNewEvent"
+      @delete_event = "deleteEvent"
     />
     <v-card max-width="600" class="mx-auto">
       <div id="category-item-list-div">
@@ -78,70 +80,70 @@ export default {
     itemArray: Array
   },
   methods: {
-      /**
-       * Opens the modal
-       */
-      showModal() {
-        this.logger.debug('Opening the modal!');
-        this.isModalVisible = true;
-      },
-      /**
-       * Called to close the modal.  Hides the modal and nulls out the value
-       */
-      closeModal() {
-        this.isModalVisible = false;
-        this.itemToModify = null;
-      },
-      /**
-       * Opens the tracked item modal
-       */
-      showTrackedModal() {
-        this.logger.debug('Opening the tracked modal!');
-        this.isTrackedModalVisible = true;
+    /**
+     * Opens the modal
+     */
+    showModal() {
+      this.logger.debug('Opening the modal!');
+      this.isModalVisible = true;
+    },
+    /**
+     * Called to close the modal.  Hides the modal and nulls out the value
+     */
+    closeModal() {
+      this.isModalVisible = false;
+      this.itemToModify = null;
+    },
+    /**
+     * Opens the tracked item modal
+     */
+    showTrackedModal() {
+      this.logger.debug('Opening the tracked modal!');
+      this.isTrackedModalVisible = true;
 
-      },
-      /**
-       * Called to close the tracked modal.  Hides the modal and nulls out the associated value
-       */
-      closeTrackedModal() {
-        this.logger.debug('Closing the tracked modal');
-        this.isTrackedModalVisible = false;
-        this.trackedItemToModify = null;
-      },
-      /**
-       * Called to save the tracked item from the modal
-       */
-      saveTrackedModal(trackedItemToSave) {
-        // TODO
-        this.logger.debug('Got a call to save the tracked item + ' + JSON.stringify(trackedItemToSave));
-        this.isTrackedModalVisible = false;
-        this.trackedItemToModify = null;
-      },
-      /**
-      * Called when the user clicks on an item.  Triggered by the 'edit' event from 
-      * one of the child components
-       */
-      editItem(itemToEdit) {
-        this.logger.debug('going to edit item: ' + JSON.stringify(itemToEdit));
-        this.itemToModify = itemToEdit;
-        this.isModalVisible = true;
-      },
-      /**
-       * Called when the user selects to save a new/modified item
-       * @prop {Object} itemToSave - the item to be saved (new or modified)
-       */
-      async saveItem(itemToSave) {
-        this.isModalVisible = false;
-        this.itemToModify = null;
+    },
+    /**
+     * Called to close the tracked modal.  Hides the modal and nulls out the associated value
+     */
+    closeTrackedModal() {
+      this.logger.debug('Closing the tracked modal');
+      this.isTrackedModalVisible = false;
+      this.trackedItemToModify = null;
+    },
+    /**
+     * Called to save the tracked item from the modal
+     */
+    saveTrackedModal(trackedItemToSave) {
+      // TODO
+      this.logger.debug('Got a call to save the tracked item + ' + JSON.stringify(trackedItemToSave));
+      this.isTrackedModalVisible = false;
+      this.trackedItemToModify = null;
+    },
+    /**
+    * Called when the user clicks on an item.  Triggered by the 'edit' event from 
+    * one of the child components
+      */
+    editItem(itemToEdit) {
+      this.logger.debug('going to edit item: ' + JSON.stringify(itemToEdit));
+      this.itemToModify = itemToEdit;
+      this.isModalVisible = true;
+    },
+    /**
+     * Called when the user selects to save a new/modified item
+     * @prop {Object} itemToSave - the item to be saved (new or modified)
+     */
+    async saveItem(itemToSave) {
+      this.isModalVisible = false;
+      this.itemToModify = null;
 
-        itemToSave = this.itemHelper.createNewItem(itemToSave);
-        this.itemModel.saveItem(itemToSave);
-      },
-      /**
-       * Called when a child component emits a changed event
-       * @prop {Object} updatedItem - the item that was updated
-       * @vue-event {Object} updatedItem - emits back out the received updated item to the parent component
-       */
+      itemToSave = this.itemHelper.createNewItem(itemToSave);
+      this.itemModel.saveItem(itemToSave);
+    },
+    /**
+     * Called when a child component emits a changed event
+     * @prop {Object} updatedItem - the item that was updated
+     * @vue-event {Object} updatedItem - emits back out the received updated item to the parent component
+     */
     one_and_done_toggle: function(updatedItem) {
       this.logger.debug(
         "got a one and done change event: " + JSON.stringify(updatedItem)
@@ -152,6 +154,14 @@ export default {
       this.logger.debug('Opening the tracked item modal for item: ' + trackedItem.id);
       this.trackedItemToModify = trackedItem;
       this.isTrackedModalVisible = true;
+    },
+    addNewEvent: function(newEvent) {
+      this.logger.debug('Got a new event: ' + JSON.stringify(newEvent));
+      // TODO
+    },
+    deleteEvent: function(idToDelete) {
+      this.logger.debug('Removing event with id: ' + idToDelete);
+      // TODO 
     }
   },
   watch: {

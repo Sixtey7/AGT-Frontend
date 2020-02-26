@@ -35,13 +35,6 @@ export default {
             this.logger.debug('Deleting an event with id: ' + event.id);
             this.eventToDelete = event;
             this.delete_dialog = true;
-
-            //remove the event from the list
-            let index = this.item.events.findIndex(itemEvent => itemEvent.id === event.id);
-            this.item.events.splice(index, 1);
-
-            //emit an event to tell the parent to remove it from the backend
-            this.$emit("delete-event", event.id);
         },
         editEvent(eventId) {
             this.logger.debug('Editing an event with id: ' + eventId);
@@ -52,6 +45,15 @@ export default {
         },
         confirmEventDelete(idToDelete) {
             this.logger.debug("Confirmed removal of event with id: " + idToDelete);
+
+            //remove the event from the list
+            let index = this.item.events.findIndex(itemEvent => itemEvent.id === idToDelete);
+            this.item.events.splice(index, 1);
+
+            //emit an event to tell the parent to remove it from the backend
+            this.$emit("delete-event", event.id);
+
+            this.$emit('delete_event', idToDelete);
             this.delete_dialog = false;
             this.eventToDelete = {};
         },
