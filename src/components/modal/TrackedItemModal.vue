@@ -50,10 +50,9 @@ export default {
             let index = this.item.events.findIndex(itemEvent => itemEvent.id === idToDelete);
             this.item.events.splice(index, 1);
 
-            //emit an event to tell the parent to remove it from the backend
-            this.$emit("delete-event", event.id);
-
+            // emit an event to tell the backend to remove it
             this.$emit('delete_event', idToDelete);
+            
             this.delete_dialog = false;
             this.eventToDelete = {};
         },

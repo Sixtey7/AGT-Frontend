@@ -48,6 +48,7 @@
  */
 import CategoryModel from "../../model/CategoryModel";
 import ItemModel from '../../model/ItemModel';
+import EventModel from '../../model/EventModel';
 import ItemHelper from "../../utils/ItemHelper";
 import NewItemModal from '../modal/NewItemModal';
 import TrackedItemModal from '../modal/TrackedItemModal';
@@ -76,6 +77,7 @@ export default {
     logger: Object,
     categoryModel: CategoryModel,
     itemModel: ItemModel,
+    eventModel: EventModel,
     categoryArray: Array,
     itemArray: Array
   },
@@ -157,11 +159,13 @@ export default {
     },
     addNewEvent: function(newEvent) {
       this.logger.debug('Got a new event: ' + JSON.stringify(newEvent));
-      // TODO
+      
+      this.eventModel.addNewEvent(newEvent);
     },
     deleteEvent: function(idToDelete) {
       this.logger.debug('Removing event with id: ' + idToDelete);
-      // TODO 
+
+      this.eventModel.deleteEvent(idToDelete);
     }
   },
   watch: {

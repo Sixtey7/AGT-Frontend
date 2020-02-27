@@ -8,6 +8,7 @@
                         :categoryArray = "categoryModel.categoryArray"
                         :itemModel = "itemModel"
                         :itemArray = "itemModel.itemArray"
+                        :eventModel = "eventModel"
                         :logger = "logger"
                         @updatedItem = "itemUpdated">
                     </ListView>
