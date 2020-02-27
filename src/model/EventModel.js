@@ -79,12 +79,12 @@ class EventModel {
      * @param {String} idToDelete the id of the event to be deleted 
      */
     async deleteEvent(idToDelete) {
-        this._logger.delete('Deleting an event with id: ' + idToDelete);
+        this._logger.debug('Deleting an event with id: ' + idToDelete);
 
         let returnValue = await this._deleteEvent(idToDelete);
 
         if (returnValue) {
-            this.eventArray = this._arrayHelper.removeItemFromArray(idToDelete);
+            this.eventArray = this._arrayHelper.removeItemFromArray(idToDelete, this.eventArray);
         }
         else {
             this._logger.error('failed to delete event with id: ' + idToDelete);
@@ -163,12 +163,12 @@ class EventModel {
      * @private
      */
     async _deleteEvent(idToDelete) {
-        this._logger.delete('Deleting an event with id: ' + idToDelete);
+        this._logger.debug('Deleting an event with id: ' + idToDelete);
 
 
         let returnValue = false;
 
-        await({
+        await axios({
             method: 'DELETE',
             url: EVENT_URL + idToDelete
         })
