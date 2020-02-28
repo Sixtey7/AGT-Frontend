@@ -160,7 +160,7 @@ export default {
     addNewEvent: function(newEvent) {
       this.logger.debug('Got a new event: ' + JSON.stringify(newEvent));
       
-      this.eventModel.addNewEvent(newEvent);
+      this.eventModel.saveEvent(newEvent);
     },
     deleteEvent: function(idToDelete) {
       this.logger.debug('Removing event with id: ' + idToDelete);
