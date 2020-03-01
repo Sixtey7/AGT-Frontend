@@ -152,16 +152,28 @@ export default {
       );
       this.$emit("updatedItem", updatedItem);
     },
+    /**
+     * Called when the user selects to option to view a tracked item
+     * @prop {Object} trackedItem - the item the user clicked on
+     */
     viewTrackedItem: function (trackedItem) {
       this.logger.debug('Opening the tracked item modal for item: ' + trackedItem.id);
       this.trackedItemToModify = trackedItem;
       this.isTrackedModalVisible = true;
     },
+    /**
+     * Called in response to the tracked item modal emitting the event for a new event added
+     * @prop {Object} newEvent - the event that was emitted from the tracked item
+     */
     addNewEvent: function(newEvent) {
       this.logger.debug('Got a new event: ' + JSON.stringify(newEvent));
       
       this.eventModel.saveEvent(newEvent);
     },
+    /**
+     * Called in response to the tracked item modal emitting the event for a deleted event
+     * @prop {String} idToDelete - String containing the uuid of the event to be deleted
+     */
     deleteEvent: function(idToDelete) {
       this.logger.debug('Removing event with id: ' + idToDelete);
 

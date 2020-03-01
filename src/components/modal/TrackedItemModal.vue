@@ -19,30 +19,57 @@ export default {
         }
     },
     methods: {
+        /**
+         * Called when the user selcts to close the dialog
+         * @vue-event {null} close - emits out to the parent to close the modal
+         */
         close() {
             this.clearValues();
             this.$emit('close')
         },
+        /**
+         * Called when the user selects to save the tracked item
+         * @vue-event {Object} save - emits the updated tracked item
+         */
         save() {
             this.$emit('save', JSON.parse(JSON.stringify(this.item)))
             this.clearValues();
         },
+        /**
+         * Utility method used to clear out all of the properties of the modal
+         */
         clearValues() {
             this.eventToDelete = {};
             this.date_selection = this.date_helper.getTodayString();
         },
+        /**
+         * Facilitates the deletion of the event when the user selects to do so
+         * @prop {Object} event - the event the user selected to delete
+         */
         deleteEvent(event) {
             this.logger.debug('Deleting an event with id: ' + event.id);
             this.eventToDelete = event;
             this.delete_dialog = true;
         },
+        /**
+         * Faciliates the editing of an event when the user selects to do so
+         * @prop {String} eventId - The id of the event to be edited 
+         */
         editEvent(eventId) {
             this.logger.debug('Editing an event with id: ' + eventId);
         },
+        /**
+         * Called when the user dismisses the event deletion dialog
+         */
         closeDeleteDialog() {
             this.delete_dialog = false;
             this.eventToDelete = {};
         },
+        /**
+         * Processes the deletion of an event once the user has choosen to
+         * @prop {String} idToDelete - the id of the event to be deleted
+         * @vue-event {String} delete_event - Emmitted to notify the parent that the event is being removed.  Contains a string with the UUID being removed
+         */
         confirmEventDelete(idToDelete) {
             this.logger.debug("Confirmed removal of event with id: " + idToDelete);
 
@@ -56,10 +83,17 @@ export default {
             this.delete_dialog = false;
             this.eventToDelete = {};
         },
+        /**
+         * Called when the user dismisses the add dialog
+         */
         closeAddDialog() {
             this.add_dialog = false;
             this.date_selection = this.date_helper.getTodayString();
         },
+        /**
+         * Processes the addition of an event once the user has choosen to
+         * @vue-event {Object} new_event - Emmitted to notify the parent that the event is being added.  Contains the new event object
+         */
         saveAddDialog() {
             // build the event out of entered values
             let new_event = this.event_helper.buildEvent(this.item.id, this.date_selection);
@@ -71,8 +105,6 @@ export default {
             // reset the values back on the dialog
             this.add_dialog = false;
             this.date_selection = this.date_helper.getTodayString();
-            
-
         }
     },
     watch: {
