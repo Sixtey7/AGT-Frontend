@@ -13,6 +13,7 @@ export default {
             add_dialog: false,
             date_helper: new DateHelper(this.logger),
             event_helper: new EventHelper(this.logger),
+            is_editing: false,
             eventToDelete: {},
             date_selection: {}
             
@@ -57,6 +58,16 @@ export default {
          */
         editEvent(eventId) {
             this.logger.debug('Editing an event with id: ' + eventId);
+            this.is_editing = true;
+            let eventToEdit = this.item.events.find(itemEvent => itemEvent.id == eventId);
+            let dateToEdit = eventToEdit.date;
+            this.logger.debug('Date from the event: ' + dateToEdit)
+            dateToEdit = this.date_helper.massageDateForFrontend(dateToEdit);
+            dateToEdit = this.date_helper.formatDateForDialog(dateToEdit);
+            this.logger.debug('editing the date' + dateToEdit);
+            this.date_selection = dateToEdit;
+
+        this.add_dialog = true;
         },
         /**
          * Called when the user dismisses the event deletion dialog
@@ -88,22 +99,30 @@ export default {
          */
         closeAddDialog() {
             this.add_dialog = false;
+            this.is_editing = false;
             this.date_selection = this.date_helper.getTodayString();
         },
         /**
          * Processes the addition of an event once the user has choosen to
          * @vue-event {Object} new_event - Emmitted to notify the parent that the event is being added.  Contains the new event object
+         * @vue-event {Object} edit_event - Emmitted to notify the parent that the event is being edited.  Contains the edited event object
          */
         saveAddDialog() {
             // build the event out of entered values
             let new_event = this.event_helper.buildEvent(this.item.id, this.date_selection);
             this.item.events.push(new_event);
 
-            // emit the event for the parent to know to add the event
-            this.$emit('new_event', new_event);
+            if (this.is_editing) {
+                this.$emit('edit_event', new_event);
+            }
+            else {
+                // emit the event for the parent to know to add the event
+                this.$emit('new_event', new_event);
+            }
 
             // reset the values back on the dialog
             this.add_dialog = false;
+            this.is_editing = false;
             this.date_selection = this.date_helper.getTodayString();
         }
     },

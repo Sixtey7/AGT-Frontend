@@ -36,6 +36,10 @@ class DateHelper {
     getTodayString() {
         return moment().toISOString().substr(0, 10);
     }
+
+    formatDateForDialog(dateToFormat) {
+        return dateToFormat.toISOString().substr(0, 10);
+    }
 }
 
 export default DateHelper;
