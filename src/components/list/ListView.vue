@@ -168,7 +168,7 @@ export default {
     addNewEvent: function(newEvent) {
       this.logger.debug('Got a new event: ' + JSON.stringify(newEvent));
       
-      this.eventModel.saveEvent(newEvent);
+      this.eventModel.addEvent(newEvent);
     },
     /**
      * Called in response to the tracked item modal emitting the event for a deleted event

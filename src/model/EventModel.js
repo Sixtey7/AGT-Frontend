@@ -36,41 +36,43 @@ class EventModel {
             });
     }
 
+    async addEvent(eventToAdd) {
+        // deep copy the event prior to manpulating it
+        let eventToSave = JSON.parse(JSON.stringify(eventToAdd));
+
+        this._logger.debug('adding a new event!: ' + JSON.stringify(eventToSave));
+
+        let returnValue = await this._postEvent(eventToSave);
+
+        if (returnValue) {
+            eventToSave.id = returnValue.id;
+            this.eventArray.push(eventToSave);
+        }
+        else {
+            this._logger.error('failed to post event for: ' + JSON.stringify(event));
+            throw "Failed to Save New Event!";
+        }
+    }
+
     /**
-     * Adds the provided event (new or updated) to the collection and sends it to the backend
+     * Saves the provided updated event to the collection and sends it to the backend
      * @param {Event} eventToSaveInput The Event to be saved to the backend 
      */
-    async saveEvent(eventToSaveInput) {
+    async saveEditedEvent(eventToSaveInput) {
         // deep copy the evet prior to manupulating it
         let eventToSave = JSON.parse(JSON.stringify(eventToSaveInput));
 
         // determine if this is an existing event or a new one
-        if (eventToSaveInput.id) {
-            this._logger.debug('saving an edited event: ' + JSON.stringify(eventToSave));
+        this._logger.debug('saving an edited event: ' + JSON.stringify(eventToSave));
 
-            let returnValue = await this._putEvent(eventToSave);
+        let returnValue = await this._putEvent(eventToSave);
 
-            if (returnValue) {
-                this._logger.debug('successfully put the event!');
-            }
-            else {
-                this._logger.error('failed to put the event!');
-                throw "Failed to Save Editied Event!";
-            }
+        if (returnValue) {
+            this._logger.debug('successfully put the event!');
         }
         else {
-            this._logger.debug('adding a new event!: ' + JSON.stringify(eventToSave));
-
-            let returnValue = await this._postEvent(eventToSave);
-
-            if (returnValue) {
-                eventToSave.id = returnValue.id;
-                this.eventArray.push(eventToSave);
-            }
-            else {
-                this._logger.error('failed to post event for: ' + JSON.stringify(event));
-                throw "Failed to Save New Event!";
-            }
+            this._logger.error('failed to put the event!');
+            throw "Failed to Save Editied Event!";
         }
     }
 
