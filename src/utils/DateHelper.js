@@ -30,6 +30,10 @@ class DateHelper {
         return dateObj.format('MMM DD, YYYY');
     }
 
+    createDateFromDisplayDate(displayDate) {
+        return moment(displayDate).format('ddd, DD MMM YYYY HH:mm:ss');
+    }
+
     /**
      * Returns the string version of today's date
      */

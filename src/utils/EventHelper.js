@@ -35,10 +35,12 @@ class EventHelper {
      * @param {String} input_date String containing the date for the event
      */
     buildEvent(input_item_id, input_date) {
+        let fullDate = this._dateHelper.createDateFromDisplayDate(input_date);
+        this._logger.debug('Built the date: ' + fullDate);
         let new_event = {
             id: uuid4(),
             item_id: input_item_id,
-            date: input_date,
+            date: fullDate,
             value: 'True'
         };
 

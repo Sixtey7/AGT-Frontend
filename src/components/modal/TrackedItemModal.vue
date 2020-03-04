@@ -67,7 +67,7 @@ export default {
             this.logger.debug('editing the date' + dateToEdit);
             this.date_selection = dateToEdit;
 
-        this.add_dialog = true;
+            this.add_dialog = true;
         },
         /**
          * Called when the user dismisses the event deletion dialog
@@ -110,6 +110,7 @@ export default {
         saveAddDialog() {
             // build the event out of entered values
             let new_event = this.event_helper.buildEvent(this.item.id, this.date_selection);
+            this.logger.debug('built the event: ' + JSON.stringify(new_event));
             this.item.events.push(new_event);
 
             if (this.is_editing) {
