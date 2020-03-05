@@ -36,6 +36,10 @@ class EventModel {
             });
     }
 
+    /**
+     * Saves the provided new event to the collection and sends it to the backend
+     * @param {Event} eventToAdd The new event to be saved to the backend
+     */
     async addEvent(eventToAdd) {
         // deep copy the event prior to manpulating it
         let eventToSave = JSON.parse(JSON.stringify(eventToAdd));
@@ -49,7 +53,7 @@ class EventModel {
             this.eventArray.push(eventToSave);
         }
         else {
-            this._logger.error('failed to post event for: ' + JSON.stringify(event));
+            this._logger.error('failed to post event for: ' + JSON.stringify(eventToSave));
             throw "Failed to Save New Event!";
         }
     }
