@@ -18,6 +18,10 @@ class DateHelper {
         return moment(dateToMassage.slice(0, -4), 'ddd, DD MMM YYYY HH:mm:ss');
     }
 
+    /**
+     * Takes in a date from the fromend and returns a date formatted for the backend
+     * @param {Object} dateToMassage Javascript date object
+     */
     massageDateForBackend(dateToMassage) {
         return moment(dateToMassage).format('ddd, DD MMM YYYY HH:mm:ss');
     }
@@ -30,6 +34,10 @@ class DateHelper {
         return dateObj.format('MMM DD, YYYY');
     }
 
+    /**
+     * Returns a formatted date from the provided display date
+     * @param {String} displayDate The date in display date format (MM-DD-YYYY)
+     */
     createDateFromDisplayDate(displayDate) {
         return moment(displayDate).format('ddd, DD MMM YYYY HH:mm:ss');
     }
@@ -41,6 +49,10 @@ class DateHelper {
         return moment().toISOString().substr(0, 10);
     }
 
+    /**
+     * Formats the provided date into the format that is shown on dialogs (MM-DD-YYYY)
+     * @param {Date} dateToFormat Javascript date object
+     */
     formatDateForDialog(dateToFormat) {
         return dateToFormat.toISOString().substr(0, 10);
     }
