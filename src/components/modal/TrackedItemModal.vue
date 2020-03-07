@@ -1,6 +1,7 @@
 <script>
 import DateHelper from '../../utils/DateHelper';
 import EventHelper from '../../utils/EventHelper';
+import ArrayHelper from '../../utils/ArrayHelper';
 
 export default {
     name: 'TrackedItemModal',
@@ -13,6 +14,7 @@ export default {
             add_dialog: false,
             date_helper: new DateHelper(this.logger),
             event_helper: new EventHelper(this.logger),
+            array_helper: new ArrayHelper(this.logger),
             is_editing: false,
             eventToDelete: {},
             date_selection: {}
@@ -109,15 +111,20 @@ export default {
          */
         saveAddDialog() {
             // build the event out of entered values
+            // TODO: We need to handle the fact that this might be an edit and already has an id
             let new_event = this.event_helper.buildEvent(this.item.id, this.date_selection);
             this.logger.debug('built the event: ' + JSON.stringify(new_event));
-            this.item.events.push(new_event);
+
+            // merge the event into the events array
+            this.array_helper.mergeItemIntoArray(new_event, this.item.events);
 
             if (this.is_editing) {
+                this.logger.debug('emitting the edit event');
                 this.$emit('edit_event', new_event);
             }
             else {
                 // emit the event for the parent to know to add the event
+                this.logger.debug('emitting the new event');
                 this.$emit('new_event', new_event);
             }
 
