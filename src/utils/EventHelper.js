@@ -24,6 +24,16 @@ class EventHelper {
             event.date = this._dateHelper.massageDateForFrontend(event.date);
         });
 
+        // WARNING GARBAGE follows this
+        let that = this;
+        that._logger.debug('about to sort!');
+        eventArray.sort((event1, event2) => {
+            that._logger.debug('Comparing ' + event1.date + ' to ' + event2.date);
+            return event1.date > event2.date;
+        });
+
+        // END GARBAGE
+
         this._logger.debug('Event array after massaging: ' + JSON.stringify(eventArray));
         return eventArray;
     }

@@ -15,7 +15,7 @@ export default {
             date_helper: new DateHelper(this.logger),
             event_helper: new EventHelper(this.logger),
             array_helper: new ArrayHelper(this.logger),
-            is_editing: false,
+            editing_id: null,
             eventToDelete: {},
             date_selection: {}
             
@@ -60,13 +60,13 @@ export default {
          */
         editEvent(eventId) {
             this.logger.debug('Editing an event with id: ' + eventId);
-            this.is_editing = true;
+            this.editing_id = eventId;
             let eventToEdit = this.item.events.find(itemEvent => itemEvent.id == eventId);
             let dateToEdit = eventToEdit.date;
             this.logger.debug('Date from the event: ' + dateToEdit)
-            dateToEdit = this.date_helper.massageDateForFrontend(dateToEdit);
-            dateToEdit = this.date_helper.formatDateForDialog(dateToEdit);
-            this.logger.debug('editing the date' + dateToEdit);
+
+            dateToEdit = this.date_helper.createISODateString(dateToEdit);
+            this.logger.debug('editing the date ' + dateToEdit);
             this.date_selection = dateToEdit;
 
             this.add_dialog = true;
@@ -101,7 +101,7 @@ export default {
          */
         closeAddDialog() {
             this.add_dialog = false;
-            this.is_editing = false;
+            this.editing_id = null;
             this.date_selection = this.date_helper.getTodayString();
         },
         /**
@@ -110,27 +110,32 @@ export default {
          * @vue-event {Object} edit_event - Emmitted to notify the parent that the event is being edited.  Contains the edited event object
          */
         saveAddDialog() {
-            // build the event out of entered values
-            // TODO: We need to handle the fact that this might be an edit and already has an id
-            let new_event = this.event_helper.buildEvent(this.item.id, this.date_selection);
-            this.logger.debug('built the event: ' + JSON.stringify(new_event));
+            let event_to_merge = null;
 
-            // merge the event into the events array
-            this.array_helper.mergeItemIntoArray(new_event, this.item.events);
-
-            if (this.is_editing) {
+            if (this.editing_id) {
+                event_to_merge = this.item.events.find(itemEvent => itemEvent.id == this.editing_id);
+                let dateToSet = this.date_helper.createDateFromDisplayDate(this.date_selection);
+                event_to_merge.date = dateToSet;
                 this.logger.debug('emitting the edit event');
-                this.$emit('edit_event', new_event);
+                this.$emit('edit_event', event_to_merge);
             }
             else {
+                // build out the new event
+                event_to_merge = this.event_helper.buildEvent(this.item.id, this.date_selection);
+                this.logger.debug('built the event: ' + JSON.stringify(event_to_merge));
+
                 // emit the event for the parent to know to add the event
                 this.logger.debug('emitting the new event');
-                this.$emit('new_event', new_event);
+                this.$emit('new_event', event_to_merge);
             }
+
+            // merge the event into the events array
+            this.array_helper.mergeItemIntoArray(event_to_merge, this.item.events);
+
 
             // reset the values back on the dialog
             this.add_dialog = false;
-            this.is_editing = false;
+            this.editing_id = null;
             this.date_selection = this.date_helper.getTodayString();
         }
     },
@@ -147,7 +152,7 @@ export default {
     },
     filters: {
         format_date: function (in_date) {
-            return in_date.substring(5, 16);
+            return in_date.substring(0, 10);
         }
     }
 }

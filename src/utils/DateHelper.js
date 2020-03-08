@@ -27,11 +27,11 @@ class DateHelper {
     }
 
     /**
-     * Returns a string representation of the date for display to a user
-     * @param {Object} dateObj Javascript date object 
+     * Returns the provided date into an ISO Date (YYYY-MM-DD) format
+     * @param {String} dateToMassage the date to be turned into an ISO Date
      */
-    createDisplayDate(dateObj) {
-        return dateObj.format('MMM DD, YYYY');
+    createISODateString(dateToMassage) {
+        return moment(dateToMassage).format('YYYY-MM-DD');
     }
 
     /**
@@ -47,14 +47,6 @@ class DateHelper {
      */
     getTodayString() {
         return moment().toISOString().substr(0, 10);
-    }
-
-    /**
-     * Formats the provided date into the format that is shown on dialogs (MM-DD-YYYY)
-     * @param {Date} dateToFormat Javascript date object
-     */
-    formatDateForDialog(dateToFormat) {
-        return dateToFormat.toISOString().substr(0, 10);
     }
 }
 

@@ -3,13 +3,16 @@
  */
 import moment from 'moment'
 import DateHelper from './DateHelper';
+import EventHelper from './EventHelper';
 class ItemHelper {
     _logger;
     _dateHelper;
+    _eventHelper;
 
     constructor(logger) {
         this._logger = logger;
         this._dateHelper = new DateHelper(logger);
+        this._eventHelper = new EventHelper(logger);
     }
 
     /**
@@ -32,6 +35,7 @@ class ItemHelper {
         this._logger.debug('Array before massaging: ' + JSON.stringify(itemArray));
         itemArray.forEach(item => {
             this.massageItem(item);
+            this._eventHelper.massageEvents(item.events);
         })
 
         this._logger.debug('Array after massaging: ' + JSON.stringify(itemArray));
@@ -52,7 +56,7 @@ class ItemHelper {
             goal_date = this._dateHelper.massageDateForFrontend(item.goal_date);
         }
         this._logger.debug('Date: ' + goal_date);
-        item.display_goal_date = this._dateHelper.createDisplayDate(goal_date);
+        item.display_goal_date = this._dateHelper.createISODateString(goal_date);
         let duration = moment.duration(goal_date.diff(moment()));
         item.days_left = Math.floor(duration.asDays());
     }

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import ArrayHelper from '../utils/ArrayHelper';
 import ItemHelper from '../utils/ItemHelper';
+import DateHelper from '../utils/DateHelper';
 
 // URL to find the backend item service at
 const ITEM_URL = 'http://localhost:5000/items/';
@@ -12,6 +13,7 @@ class ItemModel {
     itemArray;
     _arrayHelper;
     _itemHelper;
+    _dateHelper;
     _logger;
 
     /**
@@ -25,7 +27,8 @@ class ItemModel {
         this.itemArray = new Array();
         this._arrayHelper = new ArrayHelper(logger);
         this._itemHelper = new ItemHelper(logger);
-
+        this._dateHelper = new DateHelper(logger);
+        
         axios
             .get(ITEM_URL)
             .then(response => {
