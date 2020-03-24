@@ -152,7 +152,9 @@ export default {
     },
     filters: {
         format_date: function (in_date) {
-            return in_date.substring(0, 10);
+            if (in_date) {
+                return in_date.substring(0, 10);
+            }
         }
     }
 }
@@ -166,7 +168,7 @@ export default {
         <v-card>
             <v-card-title>Confirm Deletion</v-card-title>
             <v-card-text>
-                Confirm deletion of event on<br>{{ eventToDelete.date }}
+                Confirm deletion of event on<br>{{ eventToDelete.date | format_date }}
             </v-card-text>
             <v-card-actions>
                 <v-btn
