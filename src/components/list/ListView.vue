@@ -1,8 +1,14 @@
 <template>
   <div id = "list-view">
-    <div id = "add-item-div">
-      <v-btn id = "item-add-button" color = "primary" dark @click="showModal">Add
+    <div id = "button-div">
+      <v-btn id = "item-add-button" class = "top-button" color = "primary" dark @click="showModal">Add
         <v-icon dark right>add</v-icon>
+      </v-btn>
+      <v-btn id = "download-all-data" class = "top-button" color = "primary" dark @click="downloadAllData">Download
+        <v-icon dark right>mdi-download</v-icon>
+      </v-btn>
+      <v-btn id = "upload-all-data" class = "top-button" color = "primary" dark>Upload
+        <v-icon dark right>mdi-upload</v-icon>
       </v-btn>
     </div>
     <NewItemModal
@@ -54,6 +60,7 @@ import NewItemModal from '../modal/NewItemModal';
 import TrackedItemModal from '../modal/TrackedItemModal';
 import OneAndDone from "../items/OneAndDone";
 import Tracked from '../items/Tracked';
+import DataHelper from '../../utils/DataHelper';
 
 export default {
   name: "ListView",
@@ -70,7 +77,8 @@ export default {
       isModalVisible: false,
       isTrackedModalVisible: false,
       itemToModify: null,
-      trackedItemToModify: null
+      trackedItemToModify: null,
+      dataHelper: new DataHelper(this.logger)
     };
   },
   props: {
@@ -178,6 +186,23 @@ export default {
       this.logger.debug('Removing event with id: ' + idToDelete);
 
       this.eventModel.deleteEvent(idToDelete);
+    },
+    /**
+     * Called in response to the user selecting to download all of the data
+     * Provides a download frame asking the user to open or save the file
+     */
+    async downloadAllData() {
+      this.logger.debug('Downloading all of the data');
+
+      let dataResponse = await this.dataHelper.downloadAllData();
+      this.logger.debug('Got the response on export of: \n' + dataResponse);
+
+      const blob = new Blob([dataResponse], { type: 'text/csv' })
+      const link = document.createElement('a')
+      link.href = URL.createObjectURL(blob)
+      link.download = 'agt_data.csv'
+      link.click()
+      URL.revokeObjectURL(link.href)
     }
   },
   watch: {
@@ -192,5 +217,10 @@ export default {
 <style>
   .list-item-div {
     text-align: left;
+  }
+
+  .top-button {
+    margin-left: 25px;
+    margin-right: 25px;
   }
 </style>
