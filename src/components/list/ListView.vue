@@ -7,9 +7,7 @@
       <v-btn id = "download-all-data" class = "top-button" color = "primary" dark @click="downloadAllData">Download
         <v-icon dark right>mdi-download</v-icon>
       </v-btn>
-      <v-btn id = "upload-all-data" class = "top-button" color = "primary" dark>Upload
-        <v-icon dark right>mdi-upload</v-icon>
-      </v-btn>
+      <UploadButton class = "top-button" @upload  = "uploadFile" />
     </div>
     <NewItemModal
       :show = "isModalVisible"
@@ -61,6 +59,7 @@ import TrackedItemModal from '../modal/TrackedItemModal';
 import OneAndDone from "../items/OneAndDone";
 import Tracked from '../items/Tracked';
 import DataHelper from '../../utils/DataHelper';
+import UploadButton from '../admin/UploadButton';
 
 export default {
   name: "ListView",
@@ -68,7 +67,8 @@ export default {
     NewItemModal,
     TrackedItemModal,
     OneAndDone,
-    Tracked
+    Tracked,
+    UploadButton
   },
   data() {
     return {
@@ -203,6 +203,9 @@ export default {
       link.download = 'agt_data.csv'
       link.click()
       URL.revokeObjectURL(link.href)
+    },
+    uploadFile: function(fileToUpload) {
+      this.logger.debug('got the file: ' + fileToUpload);
     }
   },
   watch: {
@@ -220,7 +223,11 @@ export default {
   }
 
   .top-button {
-    margin-left: 25px;
-    margin-right: 25px;
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+
+  #button-div {
+    overflow: hidden;
   }
 </style>
