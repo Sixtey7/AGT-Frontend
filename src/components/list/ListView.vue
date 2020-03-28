@@ -204,8 +204,23 @@ export default {
       link.click()
       URL.revokeObjectURL(link.href)
     },
-    uploadFile: function(fileToUpload) {
-      this.logger.debug('got the file: ' + fileToUpload);
+    /**
+     * Called in response to the user submitting the upload form
+     * 
+     * @prop {String} fileToUpload - The contents of the file the user selected to upload
+     */
+    async uploadFile(fileToUpload) {
+      this.logger.debug('got the file contents: ' + fileToUpload);
+
+      let uploadResponse = await this.dataHelper.uploadData(fileToUpload);
+      if (uploadResponse) {
+        this.logger.debug('Successful upload');
+        alert('Successfully uploaded the file!');
+      }
+      else {
+        this.logger.error('Failed to upload csv data!');
+        alert('Failed to import data!');
+      }
     }
   },
   watch: {

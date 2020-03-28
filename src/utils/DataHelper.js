@@ -40,6 +40,37 @@ class DataHelper {
 
         return returnValue;
     }
+
+    /**
+     * Calls the backend to import the data provided by the user
+     * @param {String} dataFromFile The data the user choose to upload
+     */
+    async uploadData(dataFromFile) {
+        let returnValue = false;
+        await axios({
+            method: 'post',
+            url: EXPORT_URL,
+            headers: {
+                'Content-Type': 'text/csv'
+            },
+            data:
+                dataFromFile
+        })
+        .then(response => {
+            if (response.status === 200) {
+                this._logger.debug('Successfully posted the csv data!');
+                returnValue = true;
+            }
+            else {
+                this._logger.error('Got a negative status from the csv import post: ' + response.status);
+            }
+        })
+        .catch(err => {
+            this._logger.err('Got an error from posting the csv: ' + err);
+        })
+
+        return returnValue;
+    }
 }
 
 export default DataHelper;
