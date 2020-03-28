@@ -46,13 +46,7 @@ class EventModel {
     async addEvent(eventToAdd) {
         // deep copy the event prior to manpulating it
         let eventToSave = JSON.parse(JSON.stringify(eventToAdd));
-        //eventToSave.date = this._dateHelper.createISOString(eventToSave.date);
-/*
-        let dateToSave = this._dateHelper.createISOString(eventToSave.date);
-        this._logger.debug('got the date iso format: ' + dateToSave);
-        dateToSave = dateToSave.substr(0, dateToSave.indexOf('T'));
-        this._logger.debug('Now have the date iso string: ' + dateToSave);
-        eventToSave.date = dateToSave;*/
+
         let dateString = this._dateHelper.createISODateString(eventToSave.date);
         this._logger.debug('built the date string: ' + dateString);
         eventToSave.date = dateString;
