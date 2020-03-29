@@ -2,7 +2,7 @@ import axios from 'axios'
 import ArrayHelper from '../utils/ArrayHelper';
 
 // URL to find the backend category service at
-const CATEGORY_URL = 'http://localhost:5000/categories/';
+const CATEGORY_URL = 'http://raspberrypi:5000/categories/';
 
 class CategoryModel {
     categoryArray;

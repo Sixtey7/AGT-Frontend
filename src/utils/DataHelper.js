@@ -4,7 +4,7 @@
 import axios from 'axios';
 
 // URL to find the export functions at
-const EXPORT_URL = 'http://localhost:5000/export/';
+const EXPORT_URL = 'http://raspberrypi:5000/export/';
 
 class DataHelper {
     _logger;
@@ -36,6 +36,37 @@ class DataHelper {
         })
         .catch(err => {
             this._logger.error('Got the error when attempting to get the export data: ' + err);
+        })
+
+        return returnValue;
+    }
+
+    /**
+     * Calls the backend to import the data provided by the user
+     * @param {String} dataFromFile The data the user choose to upload
+     */
+    async uploadData(dataFromFile) {
+        let returnValue = false;
+        await axios({
+            method: 'post',
+            url: EXPORT_URL,
+            headers: {
+                'Content-Type': 'text/csv'
+            },
+            data:
+                dataFromFile
+        })
+        .then(response => {
+            if (response.status === 200) {
+                this._logger.debug('Successfully posted the csv data!');
+                returnValue = true;
+            }
+            else {
+                this._logger.error('Got a negative status from the csv import post: ' + response.status);
+            }
+        })
+        .catch(err => {
+            this._logger.err('Got an error from posting the csv: ' + err);
         })
 
         return returnValue;
