@@ -4,7 +4,7 @@ import ItemHelper from '../utils/ItemHelper';
 import DateHelper from '../utils/DateHelper';
 
 // URL to find the backend item service at
-const ITEM_URL = 'http://localhost:5000/items/';
+const ITEM_URL = 'http://raspberrypi:5000/items/';
 
 /**
  * Model class used to store the item array and communicate with the backend

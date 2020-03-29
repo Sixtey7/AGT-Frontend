@@ -4,7 +4,7 @@
 import axios from 'axios';
 
 // URL to find the export functions at
-const EXPORT_URL = 'http://localhost:5000/export/';
+const EXPORT_URL = 'http://raspberrypi:5000/export/';
 
 class DataHelper {
     _logger;

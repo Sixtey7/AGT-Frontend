@@ -4,7 +4,7 @@ import EventHelper from '../utils/EventHelper';
 import DateHelper from '../utils/DateHelper';
 
 // URL to find the backend event service at
-const EVENT_URL = 'http://localhost:5000/events/';
+const EVENT_URL = 'http://raspberrypi:5000/events/';
 
 /**
  * Model class used to store the event array and communicate with the backend
