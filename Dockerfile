@@ -16,7 +16,7 @@ RUN npm install
 COPY . .
 
 # build app for production with minification onto raspberry pi
-RUN npm run build --mode pi
+RUN npm run build -- --mode pi
 
 
 EXPOSE 8080
