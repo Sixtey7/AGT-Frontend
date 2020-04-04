@@ -4,7 +4,7 @@ import ItemHelper from '../utils/ItemHelper';
 import DateHelper from '../utils/DateHelper';
 
 // URL to find the backend item service at
-const ITEM_URL = 'http://localhost:5000/items/';
+const urlSuffix = '/items/';
 
 /**
  * Model class used to store the item array and communicate with the backend
@@ -21,16 +21,17 @@ class ItemModel {
      * Queries the backend for all of the items
      * @param {Object} logger - logger to be used by the process 
      */
-    constructor(logger) {
+    constructor(logger, backendHost) {
         this._logger = logger;
         this._logger.debug('Standing up the Item Model!');
+        this.backendURL = 'http://' + backendHost + urlSuffix
         this.itemArray = new Array();
         this._arrayHelper = new ArrayHelper(logger);
         this._itemHelper = new ItemHelper(logger);
         this._dateHelper = new DateHelper(logger);
         
         axios
-            .get(ITEM_URL)
+            .get(backendURL)
             .then(response => {
                 this._logger.debug('Got the response: ' + JSON.stringify(response.data));
 
@@ -111,7 +112,7 @@ class ItemModel {
         let returnValue = '';
         await axios({
             method: 'put',
-            url: ITEM_URL + itemToPut.id,
+            url: backendURL + itemToPut.id,
             headers: {
                 'Content-type': 'application/json'
             },
@@ -142,7 +143,7 @@ class ItemModel {
         let returnValue = '';
         await axios({
             method: 'post',
-            url: ITEM_URL,
+            url: backendURL,
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -178,7 +179,7 @@ class ItemModel {
 
         await axios({
             method: 'DELETE',
-            url: ITEM_URL + idToDelete
+            url: backendURL + idToDelete
         })
         .then(response => {
             if (response.status === 200) {

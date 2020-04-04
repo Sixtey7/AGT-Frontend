@@ -32,10 +32,13 @@ export default {
     data() {
         return {
             logger: Vue.$log,
-            itemModel: new ItemModel(Vue.$log),
+            itemModel: new ItemModel(Vue.$log, this.backendHost),
             categoryModel: new CategoryModel(Vue.$log),
             eventModel: new EventModel(Vue.$log)
         }
+    },
+    beforeCreate() {
+        this.backendHost = process.env.VUE_APP_BACKEND_HOSTNAME + ':' + process.env.VUE_APP_BACKEND_PORT;
     },
     methods: {
         itemUpdated(updatedItem) {
