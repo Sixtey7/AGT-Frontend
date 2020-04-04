@@ -31,7 +31,7 @@ class ItemModel {
         this._dateHelper = new DateHelper(logger);
         
         axios
-            .get(backendURL)
+            .get(this.backendURL)
             .then(response => {
                 this._logger.debug('Got the response: ' + JSON.stringify(response.data));
 
@@ -112,7 +112,7 @@ class ItemModel {
         let returnValue = '';
         await axios({
             method: 'put',
-            url: backendURL + itemToPut.id,
+            url: this.backendURL + itemToPut.id,
             headers: {
                 'Content-type': 'application/json'
             },
@@ -143,7 +143,7 @@ class ItemModel {
         let returnValue = '';
         await axios({
             method: 'post',
-            url: backendURL,
+            url: this.backendURL,
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -179,7 +179,7 @@ class ItemModel {
 
         await axios({
             method: 'DELETE',
-            url: backendURL + idToDelete
+            url: this.backendURL + idToDelete
         })
         .then(response => {
             if (response.status === 200) {
