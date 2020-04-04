@@ -15,8 +15,9 @@ RUN npm install
 # copy project files and folders to the current working directory (i.e. the 'app' folder)
 COPY . .
 
-# build app for production with minification
-RUN npm run build
+# build app for production with minification onto raspberry pi
+RUN npm run build --mode pi
+
 
 EXPOSE 8080
 CMD [ "http-server", "dist"]
