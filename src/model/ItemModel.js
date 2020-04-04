@@ -20,6 +20,8 @@ class ItemModel {
      * Builds a new clean instance of the item model
      * Queries the backend for all of the items
      * @param {Object} logger - logger to be used by the process 
+     * @param {String} backendHost The url to find the backend at
+
      */
     constructor(logger, backendHost) {
         this._logger = logger;

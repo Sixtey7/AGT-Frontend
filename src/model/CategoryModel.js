@@ -2,7 +2,7 @@ import axios from 'axios'
 import ArrayHelper from '../utils/ArrayHelper';
 
 // URL to find the backend category service at
-const CATEGORY_URL = 'http://localhost:5000/categories/';
+const urlSuffix = '/categories/';
 
 class CategoryModel {
     categoryArray;
@@ -13,15 +13,17 @@ class CategoryModel {
      * Builds a clean instance of the category model
      * Queries the backend for all of the categories
      * @param {Object} logger The logger instance to be used 
+     * @param {String} backendHost The url to find the backend at
      */
-    constructor(logger) {
+    constructor(logger, backendHost) {
         this._logger = logger;
         this._logger.debug('Standing up the Category Model!');
+        this.backendUrl = 'http://' + backendHost + urlSuffix
         this.categoryArray = new Array();
         this._arrayHelper = new ArrayHelper(logger);
 
         axios
-            .get(CATEGORY_URL)
+            .get(this.backendUrl)
             .then(response => {
                 this._logger.debug('Got the response: ' + JSON.stringify(response.data));
 
@@ -93,7 +95,7 @@ class CategoryModel {
         let returnValue = '';
         axios({
             method: 'put',
-            url: CATEGORY_URL + categoryToPut.id,
+            url: this.backendHost + categoryToPut.id,
             headers: {
                 'Content-type': 'application/json'
             },
@@ -124,7 +126,7 @@ class CategoryModel {
         let returnValue = '';
         await axios({
             method: 'post',
-            url: CATEGORY_URL,
+            url: this.backendHost,
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -160,7 +162,7 @@ class CategoryModel {
 
         await axios({
             method: 'DELETE',
-            url: CATEGORY_URL + idToDelete
+            url: this.backendHost + idToDelete
         })
         .then(response => {
             if (response.status === 200) {
