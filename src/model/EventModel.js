@@ -4,7 +4,7 @@ import EventHelper from '../utils/EventHelper';
 import DateHelper from '../utils/DateHelper';
 
 // URL to find the backend event service at
-const EVENT_URL = 'http://localhost:5000/events/';
+const urlSuffix = '/events/';
 
 /**
  * Model class used to store the event array and communicate with the backend
@@ -19,11 +19,14 @@ class EventModel {
     /**
      * Builds a clean instanceof the event model
      * Queries the backend for all of the events
-     * @param {Object} logger The logger instance to be used 
+     * @param {Object} logger The logger instance to be used
+     * @param {String} backendHost The url to find the backend at
+ 
      */
-    constructor(logger) {
+    constructor(logger, backendHost) {
         this._logger = logger;
         this._logger.debug('Standing up the Event Model!');
+        this.backendUrl = 'http://' + backendHost + urlSuffix
         this.eventArray = new Array();
         this._arrayHelper = new ArrayHelper(logger);
         this._eventHelper = new EventHelper(logger);
@@ -31,7 +34,7 @@ class EventModel {
 
         //TODO: Need to figure out if it makes sense to do the get here, since ItemModel has all of the data
         axios
-            .get(EVENT_URL)
+            .get(this.backendUrl)
             .then(response => {
                 this._logger.debug('Got the response: ' + JSON.stringify(response.data));
 
@@ -116,7 +119,7 @@ class EventModel {
         let returnValue = '';
         await axios({
             method: 'put',
-            url: EVENT_URL + eventToPut.id,
+            url: this.backendUrl + eventToPut.id,
             headers: {
                 'Content-type': 'application/json'
             },
@@ -147,7 +150,7 @@ class EventModel {
         let returnValue = '';
         await axios({
             method: 'post',
-            url: EVENT_URL,
+            url: this.backendUrl,
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -183,7 +186,7 @@ class EventModel {
 
         await axios({
             method: 'DELETE',
-            url: EVENT_URL + idToDelete
+            url: this.backendUrl + idToDelete
         })
         .then(response => {
             if (response.status === 200) {

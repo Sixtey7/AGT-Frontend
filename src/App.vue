@@ -10,6 +10,7 @@
                         :itemArray = "itemModel.itemArray"
                         :eventModel = "eventModel"
                         :logger = "logger"
+                        :backendHost = "backendHost"
                         @updatedItem = "itemUpdated">
                     </ListView>
                 </v-container>
@@ -32,10 +33,13 @@ export default {
     data() {
         return {
             logger: Vue.$log,
-            itemModel: new ItemModel(Vue.$log),
-            categoryModel: new CategoryModel(Vue.$log),
-            eventModel: new EventModel(Vue.$log)
+            itemModel: new ItemModel(Vue.$log, this.backendHost),
+            categoryModel: new CategoryModel(Vue.$log, this.backendHost),
+            eventModel: new EventModel(Vue.$log, this.backendHost)
         }
+    },
+    beforeCreate() {
+        this.backendHost = process.env.VUE_APP_BACKEND_HOSTNAME + ':' + process.env.VUE_APP_BACKEND_PORT;
     },
     methods: {
         itemUpdated(updatedItem) {

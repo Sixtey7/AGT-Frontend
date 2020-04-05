@@ -78,7 +78,7 @@ export default {
       isTrackedModalVisible: false,
       itemToModify: null,
       trackedItemToModify: null,
-      dataHelper: new DataHelper(this.logger)
+      dataHelper: new DataHelper(this.logger, this.backendHost)
     };
   },
   props: {
@@ -87,7 +87,8 @@ export default {
     itemModel: ItemModel,
     eventModel: EventModel,
     categoryArray: Array,
-    itemArray: Array
+    itemArray: Array,
+    backendHost: String
   },
   methods: {
     /**

@@ -4,13 +4,14 @@
 import axios from 'axios';
 
 // URL to find the export functions at
-const EXPORT_URL = 'http://localhost:5000/export/';
+const urlSuffix = '/export/';
 
 class DataHelper {
     _logger;
 
-    constructor(logger) {
+    constructor(logger, backendHost) {
         this._logger = logger;
+        this.backendUrl = 'http://' + backendHost + urlSuffix;
     }
 
     /**
@@ -22,7 +23,7 @@ class DataHelper {
         let returnValue = '';
         await axios({
             method: 'get',
-            url: EXPORT_URL
+            url: this.backendUrl
         })
         .then(response => {
             this._logger.debug('Got the response from the get: ' + JSON.stringify(response.data));
@@ -49,7 +50,7 @@ class DataHelper {
         let returnValue = false;
         await axios({
             method: 'post',
-            url: EXPORT_URL,
+            url: this.backendUrl,
             headers: {
                 'Content-Type': 'text/csv'
             },
