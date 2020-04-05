@@ -141,8 +141,8 @@ export default {
         }
     },
     watch: {
-        is_visible: function(is_visible) {
-            if (is_visible) {
+        show: function(show) {
+            if (show) {
                 this.clearValues();
                 this.item = JSON.parse(JSON.stringify(this.trackedItem))
             }
