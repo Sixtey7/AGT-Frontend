@@ -17,7 +17,8 @@ export default {
             array_helper: new ArrayHelper(this.logger),
             editing_id: null,
             eventToDelete: {},
-            date_selection: {}
+            date_selection: {},
+            is_visible: this.show
             
         }
     },
@@ -140,8 +141,8 @@ export default {
         }
     },
     watch: {
-        show: function(show) {
-            if (show) {
+        is_visible: function(is_visible) {
+            if (is_visible) {
                 this.clearValues();
                 this.item = JSON.parse(JSON.stringify(this.trackedItem))
             }
@@ -218,7 +219,7 @@ export default {
         </v-card>
     </v-dialog>
     <v-layout row justify-center>
-        <v-dialog v-model = "show" max-width="600px">
+        <v-dialog v-model = "is_visible" max-width="600px">
             <v-card>
                 <v-card-title>
                     <span class = "headline">{{ item.name }}</span>
