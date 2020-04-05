@@ -142,9 +142,10 @@ export default {
     },
     watch: {
         show: function(show) {
+            this.is_visible = show;
             if (show) {
                 this.clearValues();
-                this.item = JSON.parse(JSON.stringify(this.trackedItem))
+                this.item = JSON.parse(JSON.stringify(this.trackedItem));
             }
             else {
                 this.clearValues();
