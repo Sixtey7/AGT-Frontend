@@ -142,6 +142,7 @@ export default {
     },
     watch: {
         show: function(show) {
+            this.logger.debug('watcher hit with value: ' + show);
             this.is_visible = show;
             if (show) {
                 this.clearValues();
