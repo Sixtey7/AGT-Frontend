@@ -118,7 +118,6 @@ export default {
                 let dateToSet = this.date_helper.createDateFromDisplayDate(this.date_selection);
                 event_to_merge.date = dateToSet;
                 this.logger.debug('emitting the edit event');
-                this.is_visible = false;
                 this.$emit('edit_event', event_to_merge);
             }
             else {
@@ -128,7 +127,6 @@ export default {
 
                 // emit the event for the parent to know to add the event
                 this.logger.debug('emitting the new event');
-                this.is_visible = false;
                 this.$emit('new_event', event_to_merge);
             }
 

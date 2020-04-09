@@ -118,7 +118,7 @@ export default {
      */
     closeTrackedModal() {
       this.logger.debug('Closing the tracked modal');
-      //this.isTrackedModalVisible = false;
+      this.isTrackedModalVisible = false;
       this.trackedItemToModify = null;
     },
     /**
@@ -127,7 +127,7 @@ export default {
     saveTrackedModal(trackedItemToSave) {
       // TODO
       this.logger.debug('Got a call to save the tracked item + ' + JSON.stringify(trackedItemToSave));
-      //this.isTrackedModalVisible = false;
+      this.isTrackedModalVisible = false;
       this.trackedItemToModify = null;
     },
     /**
