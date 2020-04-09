@@ -10,7 +10,7 @@
           <v-list-item-subtitle v-if="item.display_goal_date" v-text="goalDisplay"></v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-action>
-            <v-btn icon @click.stop = "viewItemEvents(item.id)">
+            <v-btn icon @click = "viewItemEvents(item.id)">
                 <v-icon>mdi-clipboard-text</v-icon>
             </v-btn>
         </v-list-item-action>
