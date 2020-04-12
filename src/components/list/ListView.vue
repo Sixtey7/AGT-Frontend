@@ -23,6 +23,7 @@
       @close = "closeTrackedModal"
       @save = "saveTrackedModal"
       @new_event = "addNewEvent"
+      @edit_event = "editEvent"
       @delete_event = "deleteEvent"
     />
     <v-card max-width="600" class="mx-auto">
@@ -178,6 +179,11 @@ export default {
       this.logger.debug('Got a new event: ' + JSON.stringify(newEvent));
       
       this.eventModel.addEvent(newEvent);
+    },
+    editEvent: function(editedEvent) {
+      this.logger.debug('Got the edited event: ' + JSON.stringify(editedEvent));
+
+      this.eventModel.saveEditedEvent(editedEvent);
     },
     /**
      * Called in response to the tracked item modal emitting the event for a deleted event
