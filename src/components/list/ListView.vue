@@ -180,6 +180,10 @@ export default {
       
       this.eventModel.addEvent(newEvent);
     },
+    /**
+     * Called in response to a tracked item modal emiiting the event for an event having been edited
+     * @prop {Object} editedEvent - the event that was emitted as edited from the tracked item
+     */
     editEvent: function(editedEvent) {
       this.logger.debug('Got the edited event: ' + JSON.stringify(editedEvent));
 
