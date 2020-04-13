@@ -128,11 +128,10 @@ export default {
                 // emit the event for the parent to know to add the event
                 this.logger.debug('emitting the new event');
                 this.$emit('new_event', event_to_merge);
-
-                // convert the date to what the ui expects
-                event_to_merge.date = this.date_helper.createISODateString(event_to_merge.date);
-
             }
+
+            // convert the date to what the ui expects
+            event_to_merge.date = this.date_helper.createISODateString(event_to_merge.date);
 
             // merge the event into the events array
             this.array_helper.mergeItemIntoArray(event_to_merge, this.item.events);
