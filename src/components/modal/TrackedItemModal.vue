@@ -124,10 +124,14 @@ export default {
                 // build out the new event
                 event_to_merge = this.event_helper.buildEvent(this.item.id, this.date_selection);
                 this.logger.debug('built the event: ' + JSON.stringify(event_to_merge));
-
+                
                 // emit the event for the parent to know to add the event
                 this.logger.debug('emitting the new event');
                 this.$emit('new_event', event_to_merge);
+
+                // convert the date to what the ui expects
+                event_to_merge.date = this.date_helper.createISODateString(event_to_merge.date);
+
             }
 
             // merge the event into the events array
