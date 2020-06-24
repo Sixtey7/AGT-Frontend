@@ -7,9 +7,19 @@
     </div>
 </template>
 <script>
+/**
+ * Vue Component used to provide the user with an upload button
+ * When the user clicks it, they are presented with an upload dialog
+ * @vue-event {Object} upload - Emit the file the user choose to upload
+ */
 export default {
     name: 'UploadButton',
     methods: {
+        /**
+         * Called when the user selects to upload a file
+         * Reads in the file and emits it
+         * @vue-event {Object} upload - Emit the file the user choose to upload
+         */
         uploadCSV() {
             let fileReader = new FileReader();
             fileReader.onload = (e) => {
