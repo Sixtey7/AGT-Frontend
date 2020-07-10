@@ -17,9 +17,6 @@ const options = {
     showConsoleColors: true
 };
 
-// eslint-disable-next-line no-console
-console.log('the current value is: ' + process.env.VUE_APP_BACKEND_HOSTNAME + ':' + process.env.VUE_APP_BACKEND_PORT);
-
 Vue.use(VueLogger, options);
 
 new Vue({
